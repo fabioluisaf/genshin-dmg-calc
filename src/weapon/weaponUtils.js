@@ -1,10 +1,4 @@
-
-function getBuffVariations(weapon) {
-  const buffVariations = Object.keys(weapon.passive);
-  buffVariations.splice(0, 1);
-
-  return buffVariations;
-}
+import { getBuffVariations } from "../getBuffVariations.js";
 
 function weaponAtRefinementLevel(weapon, refinementLevel, buffVariationName) {
   if (refinementLevel > 5 || refinementLevel < 1) {
