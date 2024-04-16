@@ -24,10 +24,11 @@ function buildLeveldChar(baseChar, level, hasAscended = true) {
     baseHp,
     baseAtk,
     baseDef,
+    critRate: 0.05,
+    critDmg: 0.5,
+    er: 1,
     attrBuffNames: [baseChar.bonusAttrName],
     attrBuffValues: [bonusAttrValue],
-    critRate: 0.05,
-    critDmg: 0.5
   };
 
   return leveledChar
