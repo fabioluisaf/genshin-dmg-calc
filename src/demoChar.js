@@ -9,7 +9,7 @@ const demoChar = {
   maxAscensionDef: 210.89250183105,
   bonusAttrName: "atkPct",
   element: "Pyro",
-  weapon: "Claymore"
+  weaponType: "Claymore"
 }
 
 export default demoChar;

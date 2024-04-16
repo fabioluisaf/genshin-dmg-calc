@@ -1,34 +1,36 @@
-import getMultipliers from "./stats-calcs/statsMultipliers.js";
-import bonusAttrDict from "./stats-calcs/bonusAttributes.js";
+import getMultipliers from "./utils/statsMultipliers.js";
+import bonusAttrDict from "./utils/bonusAttributes.js";
 
-function buildFullChar(baseChar, level, hasAscended = true) {
+function buildLeveldChar(baseChar, level, hasAscended = true) {
+  if (level > 90 || level < 1) {
+    throw new Error(`Expected level between 1 and 90, but got ${level}`);
+  }
+  
   const { levelMult, ascensionMult, bonusAttrMult, ascensionLevel } = getMultipliers(baseChar.rarity, level, hasAscended);
 
   const baseHp = baseChar.baseHp * levelMult + (ascensionMult * baseChar.maxAscensionHp);
   const baseAtk = baseChar.baseAtk * levelMult + (ascensionMult * baseChar.maxAscensionAtk);
   const baseDef = baseChar.baseDef * levelMult + (ascensionMult * baseChar.maxAscensionDef);
-  const bonusAttr = bonusAttrDict[baseChar.bonusAttrName][baseChar.rarity-4] * bonusAttrMult;
+  const bonusAttrValue = bonusAttrDict[baseChar.bonusAttrName][baseChar.rarity-4] * bonusAttrMult;
 
   const leveledChar = {
     charName: baseChar.charName,
     level,
     ascensionLevel,
     rarity: baseChar.rarity,
-    bonusAttrName: baseChar.bonusAttrName,
     element: baseChar.element,
-    weapon: baseChar.weapon,
+    weaponType: baseChar.weaponType,
     bonusAttrName: baseChar.bonusAttrName,
     baseHp,
     baseAtk,
     baseDef,
-    bonusAttr,
+    attrBuffNames: [baseChar.bonusAttrName],
+    attrBuffValues: [bonusAttrValue],
     critRate: 0.05,
     critDmg: 0.5
   };
 
-  console.log(leveledChar);
-
   return leveledChar
 }
 
-export default buildFullChar;
+export default buildLeveldChar;
