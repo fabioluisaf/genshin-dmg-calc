@@ -1,4 +1,4 @@
-const demoChar = {
+const gaming = {
   charName: "Gaming",
   rarity: 4,
   baseHp: 957.38055419922,
@@ -12,4 +12,4 @@ const demoChar = {
   weaponType: "Claymore"
 }
 
-export default demoChar;
+export default gaming;

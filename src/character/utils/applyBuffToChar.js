@@ -1,13 +1,13 @@
-export function applyBuffToChar(char, buffName, buffVal) {
+export function applyBuffToChar(char, attrBuffedName, attrBuffedVal) {
   const charBuffs = char.attrBuffNames;
   const charBuffVals = char.attrBuffValues;
 
-  if (!charBuffs.includes(buffName)) {
-    charBuffs.push(buffName);
+  if (!charBuffs.includes(attrBuffedName)) {
+    charBuffs.push(attrBuffedName);
     charBuffVals.push(0);
   }
 
-  const charBuffIndex = charBuffs.indexOf(buffName);
+  const charBuffIndex = charBuffs.indexOf(attrBuffedName);
 
-  charBuffVals[charBuffIndex] += buffVal;
+  charBuffVals[charBuffIndex] += attrBuffedVal;
 }
