@@ -1,5 +1,5 @@
-import getMultipliers from "./statsMultipliers.js";
-import bonusAttrDict from "./bonusAttributes.js";
+import getMultipliers from "./stats-calcs/statsMultipliers.js";
+import bonusAttrDict from "./stats-calcs/bonusAttributes.js";
 
 function buildFullChar(baseChar, level, hasAscended = true) {
   const { levelMult, ascensionMult, bonusAttrMult, ascensionLevel } = getMultipliers(baseChar.rarity, level, hasAscended);

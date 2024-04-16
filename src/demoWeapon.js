@@ -1,5 +1,6 @@
 const demoWeapon = {
-
+  weaponName: "",
+  baseAtk: 0,
   
 }
 
