@@ -1,4 +1,4 @@
-function applyBuffToChar(char, attrBuffedName, attrBuffedVal) {
+export function applyBuffToChar(char, attrBuffedName, attrBuffedVal) {
   const charBuffs = char.attrBuffNames;
   const charBuffVals = char.attrBuffValues;
 
@@ -11,5 +11,3 @@ function applyBuffToChar(char, attrBuffedName, attrBuffedVal) {
 
   charBuffVals[charBuffIndex] += attrBuffedVal;
 }
-
-export default applyBuffToChar;

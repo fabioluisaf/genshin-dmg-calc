@@ -1,5 +1,4 @@
 const flower = {
-  artifactType: "flower",
   artifactSetName: "Marechaussee Hunter",
   artifactMainStatName: "hpFlat",
   artifactMainStatVal: 4780,
@@ -8,7 +7,6 @@ const flower = {
 };
 
 const feather = {
-  artifactType: "feather",
   artifactSetName: "Marechaussee Hunter",
   artifactMainStatName: "atkFlat",
   artifactMainStatVal: 311,
@@ -17,7 +15,6 @@ const feather = {
 };
 
 const sands = {
-  artifactType: "sands",
   artifactSetName: "Marechaussee Hunter",
   artifactMainStatName: "atkPct",
   artifactMainStatVal: 0.466,
@@ -26,7 +23,6 @@ const sands = {
 };
 
 const goblet = {
-  artifactType: "goblet",
   artifactSetName: "Wanderer's Troupe",
   artifactMainStatName: "pyroDmgBonus",
   artifactMainStatVal: 0.466,
@@ -35,7 +31,6 @@ const goblet = {
 };
 
 const circlet = {
-  artifactType: "circlet",
   artifactSetName: "Marechaussee Hunter",
   artifactMainStatName: "critDmg",
   artifactMainStatVal: 0.622,
