@@ -1,4 +1,4 @@
-import { getBuffVariations } from "../getBuffVariations.js";
+import getBuffVariations from "../getBuffVariations.js";
 
 function weaponAtRefinementLevel(weapon, refinementLevel, buffVariationName) {
   if (refinementLevel > 5 || refinementLevel < 1) {
@@ -22,4 +22,4 @@ function weaponAtRefinementLevel(weapon, refinementLevel, buffVariationName) {
   return refinedWeapon;
 }
 
-export { getBuffVariations, weaponAtRefinementLevel };
+export default weaponAtRefinementLevel;

@@ -1,6 +1,6 @@
 import buildLeveldChar from "./character/buildLeveldChar.js";
-import { equipWeapon } from "./weapon/equipWeapon.js";
-import { getBuffVariations } from "./getBuffVariations.js";
+import equipWeapon from "./equipment/equipWeapon.js";
+import getBuffVariations from "./getBuffVariations.js";
 
 import gaming from "./demo/demoChar.js";
 import wgs from "./demo/demoWeapon.js";

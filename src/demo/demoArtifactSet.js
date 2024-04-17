@@ -3,7 +3,7 @@ const marechaussee = {
   artifactSetName: "Marechaussee Hunter",
   artifactBuffThresholds: [2, 4],
   passive: {
-    attrName: [["normalAtkPct", "chargedAtkPct"], ["critRate"]],
+    attrNames: [["normalAtkPct", "chargedAtkPct"], ["critRate"]],
     oneStack: {
       variationName: " 1 stack",
       attrValues: [[0.15, 0.15], [0.12]]
