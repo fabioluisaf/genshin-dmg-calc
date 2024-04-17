@@ -1,44 +1,5 @@
 import { applyBuffToChar } from "../character/utils/applyBuffToChar.js";
-import getArtifactSetsList from "./artifactList.js";
-import { getArtifactVariation } from "./getArtifactVariation.js";
-
-function equipedSetsAmts(artifactPieces) {
-  const artifactsEquiped = {};
-
-  artifactPieces.forEach(artifact => {
-    if(!Object.keys(artifactsEquiped).includes(artifact.artifactSetName)) {
-      artifactsEquiped[artifact.artifactSetName] = 0;
-    }
-
-    artifactsEquiped[artifact.artifactSetName]++;
-  });
-
-  return artifactsEquiped;
-}
-
-function getArtifactVariationsEquiped(artifactPieces, buffVariationName) {
-  const artifactSetsFullList = getArtifactSetsList();
-  const artifactsEquiped = equipedSetsAmts(artifactPieces);
-  const artifactVariationsEquiped = [];
-
-  artifactPieces.forEach(artifact => {
-    if(!Object.keys(artifactsEquiped).includes(artifact.artifactSetName)) {
-      artifactsEquiped[artifact.artifactSetName] = 0;
-    }
-
-    artifactsEquiped[artifact.artifactSetName]++;
-  });
-
-  Object.keys(artifactsEquiped).forEach(setName => {
-    const setObj = artifactSetsFullList.filter(set => set.artifactSetName === setName)[0];
-    const equipedAmt = artifactsEquiped[setName];
-    const setVariation = getArtifactVariation(setObj, equipedAmt, buffVariationName);
-
-    artifactVariationsEquiped.push(setVariation);
-  });
-
-  return artifactVariationsEquiped;
-}
+import { getEquippedArtifactSetsList } from "./artifactUtils.js";
 
 function equipPiece(char, artifactPiece) {
   const mainStatName = artifactPiece.artifactMainStatName;
@@ -53,7 +14,7 @@ function equipPiece(char, artifactPiece) {
 }
 
 function equipArtifacts(char, artifactPieces, buffVariationName) {
-  const artifactVariationsEquiped = getArtifactVariationsEquiped(artifactPieces, buffVariationName);
+  const artifactVariationsEquiped = getEquippedArtifactSetsList(artifactPieces, buffVariationName);
   
   artifactVariationsEquiped.forEach(set => {
     char.equipedArtifactSets.push(set.artifactSetName);
@@ -67,4 +28,4 @@ function equipArtifacts(char, artifactPieces, buffVariationName) {
   artifactPieces.forEach(piece => equipPiece(char, piece));
 }
 
-export { equipArtifacts, getArtifactVariationsEquiped, equipedSetsAmts };
+export { equipArtifacts };
