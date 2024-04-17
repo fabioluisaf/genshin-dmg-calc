@@ -1,20 +1,27 @@
 
 const marechaussee = {
   artifactSetName: "Marechaussee Hunter",
-  artifactBuffThresholds: [2, 4],
   passive: {
-    attrName: [["normalAtkPct", "chargedAtkPct"], ["critRate"]],
-    oneStack: {
-      variationName: " 1 stack",
-      attrValues: [[0.15, 0.15], [0.12]]
+    attrNames: ["normalAtkPct", "chargedAtkPct", "critRate"],
+    fourPcsThreeStacks: {
+      variationName: "4pcs (3 stacks)",
+      threshold: 4,
+      attrValues: [0.15, 0.15, 0.36]
     },
-    twoStacks: {
-      variationName: " 2 stacks",
-      attrValues: [[0.15, 0.15], [0.24]]
+    fourPcsTwoStacks: {
+      variationName: "4pcs (2 stacks)",
+      threshold: 4,
+      attrValues: [0.15, 0.15, 0.24]
     },
-    threeStacks: {
-      variationname: " 3 stacks",
-      attrValues: [[0.15, 0.15], [0.36]]
+    fourPcsOneStack: {
+      variationName: "4pcs (1 stack)",
+      threshold: 4,
+      attrValues: [0.15, 0.15, 0.12]
+    },
+    twoPcs: {
+      variationName: "2pcs",
+      threshold: 2,
+      attrValues: [0.15, 0.15, 0]
     }
   }
 };

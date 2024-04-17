@@ -20,6 +20,8 @@ function buildLeveldChar(baseChar, level, hasAscended = true) {
     rarity: baseChar.rarity,
     element: baseChar.element,
     weaponType: baseChar.weaponType,
+    equipedWeaponName: undefined,
+    equipedArtifactSets: [],
     bonusAttrName: baseChar.bonusAttrName,
     baseHp,
     baseAtk,
