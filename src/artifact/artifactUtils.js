@@ -74,18 +74,19 @@ function getEquippedArtifactSet(artifactSet, equipedPiecesAmt, buffVariationName
 // artifactPieces list, with only the active passive bonuses based on buffVariationName
 function getEquippedArtifactSetsList(artifactPieces, buffVariationName) {
   const artifactSetsFullList = getArtifactSetsList();
-  const artifactsEquiped = equipedSetsAmts(artifactPieces);
-  const artifactVariationsEquiped = [];
+  const artifactsEquipedAmt = equipedSetsAmts(artifactPieces);
+  const artifactSetsEquiped = [];
 
-  Object.keys(artifactsEquiped).forEach(setName => {
+  Object.keys(artifactsEquipedAmt).forEach(setName => {
     const setObj = artifactSetsFullList.filter(set => set.artifactSetName === setName)[0];
-    const equipedAmt = artifactsEquiped[setName];
+    const equipedAmt = artifactsEquipedAmt[setName];
+
     const setVariation = getEquippedArtifactSet(setObj, equipedAmt, buffVariationName);
 
-    artifactVariationsEquiped.push(setVariation);
+    artifactSetsEquiped.push(setVariation);
   });
 
-  return artifactVariationsEquiped;
+  return artifactSetsEquiped;
 }
 
 export { getEquippedArtifactSet, getPossibleArtifactPassives, getEquippedArtifactSetsList, equipedSetsAmts };

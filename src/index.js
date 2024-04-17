@@ -8,7 +8,6 @@ import equipWeapon from "./weapon/equipWeapon.js";
 import getBuffVariations from "./getBuffVariations.js";
 import { equipArtifacts } from "./artifact/equipArtifacts.js";
 import { equipedSetsAmts } from "./artifact/artifactUtils.js";
-import { getEquippedArtifactSet, getEquippedArtifactSetsList } from "./artifact/artifactUtils.js";
 import { getPossibleArtifactPassives } from "./artifact/artifactUtils.js";
 
 const leveledGaming = buildLeveldChar(gaming, 80);
