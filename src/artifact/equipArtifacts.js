@@ -2,9 +2,23 @@ import { applyBuffToChar } from "../character/utils/applyBuffToChar.js";
 import getArtifactSetsList from "./artifactList.js";
 import { getArtifactVariation } from "./getArtifactVariation.js";
 
+function equipedSetsAmts(artifactPieces) {
+  const artifactsEquiped = {};
+
+  artifactPieces.forEach(artifact => {
+    if(!Object.keys(artifactsEquiped).includes(artifact.artifactSetName)) {
+      artifactsEquiped[artifact.artifactSetName] = 0;
+    }
+
+    artifactsEquiped[artifact.artifactSetName]++;
+  });
+
+  return artifactsEquiped;
+}
+
 function getArtifactVariationsEquiped(artifactPieces, buffVariationName) {
   const artifactSetsFullList = getArtifactSetsList();
-  const artifactsEquiped = {};
+  const artifactsEquiped = equipedSetsAmts(artifactPieces);
   const artifactVariationsEquiped = [];
 
   artifactPieces.forEach(artifact => {
@@ -53,4 +67,4 @@ function equipArtifacts(char, artifactPieces, buffVariationName) {
   artifactPieces.forEach(piece => equipPiece(char, piece));
 }
 
-export { equipArtifacts, getArtifactVariationsEquiped };
+export { equipArtifacts, getArtifactVariationsEquiped, equipedSetsAmts };

@@ -6,12 +6,13 @@ import artifactPieces from "./demo/demoArtifactPieces.js";
 import buildLeveldChar from "./character/buildLeveldChar.js";
 import equipWeapon from "./weapon/equipWeapon.js";
 import getBuffVariations from "./getBuffVariations.js";
-import { equipArtifacts } from "./artifact/equipArtifacts.js";
+import { equipArtifacts, equipedSetsAmts } from "./artifact/equipArtifacts.js";
 import { getArtifactSetVariations } from "./artifact/getArtifactVariation.js";
 
 const leveledGaming = buildLeveldChar(gaming, 80);
 const weaponBuffVariations = getBuffVariations(wgs);
-const artifactBuffVariations = getArtifactSetVariations(marechaussee, artifactPieces.length);
+const equipedSets = equipedSetsAmts(artifactPieces);
+const artifactBuffVariations = getArtifactSetVariations(marechaussee, equipedSets[marechaussee.artifactSetName]);
 
 equipWeapon(leveledGaming, wgs, 1, weaponBuffVariations[0]);
 equipArtifacts(leveledGaming, artifactPieces, artifactBuffVariations[0]);
