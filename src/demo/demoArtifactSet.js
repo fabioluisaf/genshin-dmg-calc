@@ -18,6 +18,11 @@ const marechaussee = {
       threshold: 4,
       attrValues: [0.15, 0.15, 0.12]
     },
+    fourPcsNoStacks: {
+      variationName: "4pcs (0 stacks)",
+      threshold: 4,
+      attrValues: [0.15, 0.15, 0]
+    },
     twoPcs: {
       variationName: "2pcs",
       threshold: 2,
