@@ -1,17 +1,16 @@
 import BUFF_FUNCTIONS from "./buffFunctionsLookupTable.js";
 
 function applyBuffList(char) {
-  char.attrBuffNames.forEach((attrName, index) => {
-    const buffFunction = BUFF_FUNCTIONS[attrName];
-    const buffVal = char.attrBuffValues[index];
+  const buffedAttrNames = Object.keys(char.buffList);
+  const newChar = {...char};
 
-    buffFunction(char, attrName, buffVal);
+  buffedAttrNames.forEach(attrName => {
+    const buffFunction = BUFF_FUNCTIONS[attrName];
+
+    buffFunction(newChar, attrName, newChar.buffList[attrName]);
   });
 
-  const newChar = {...char};
-  
-  delete newChar.attrBuffNames;
-  delete newChar.attrBuffValues;
+  delete newChar.buffList;
 
   return newChar;
 }

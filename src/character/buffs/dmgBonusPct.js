@@ -1,9 +1,24 @@
+const BUFFNAME_TO_BUFFTAG = {
+  normalAtkPct: "normalAtk",
+  chargedAtkPct: "chargedAtk",
+  pyroDmgBonus: "pyro",
+  hydroDmgBonus: "hydro",
+  physicalDmgBonus: "physical",
+  electroDmgBonus: "electro",
+  geoDmgBonus: "geo",
+  dendroDmgBonus: "dendro",
+  anemoDmgBonus: "anemo",
+  cryoDmgBonus: "cryo",
+}
+
 function applyDmgBonusPct(char, attr, val) {
-  if (!Object.keys(char.pctDmgBonus).includes(attr)) {
-    char.pctDmgBonus[attr] = 0;
+  const buffTag = BUFFNAME_TO_BUFFTAG[attr];
+
+  if (!Object.keys(char.pctDmgBonus).includes(buffTag)) {
+    char.pctDmgBonus[buffTag] = 0;
   }
 
-  char.pctDmgBonus[attr] += val;
+  char.pctDmgBonus[buffTag] += val;
 }
 
 function removeDmgBonusPct(char, attr, val) {

@@ -16,14 +16,13 @@ function equipedSetsAmts(artifactPieces) {
   return artifactsEquiped;
 }
 
-
 // return a list of all possible passive variation names based on equipedAmt
 function getPossibleArtifactPassives(artifactSet, equipedAmt) {
-  const allVariations = getBuffVariations(artifactSet);
+  const allVariations = getBuffVariations(artifactSet.setEffects);
   const setThresholds = [];
-
+  
   allVariations.forEach(variationName => {
-    const threshold = artifactSet.passive[variationName].threshold;
+    const threshold = artifactSet.setEffects[variationName].threshold;
 
     if (!setThresholds.includes(threshold) && threshold <= equipedAmt) {
       setThresholds.push(threshold);
@@ -33,39 +32,39 @@ function getPossibleArtifactPassives(artifactSet, equipedAmt) {
   const maxThreshold = Math.max(...setThresholds);
 
   const possibleVariations = allVariations.filter(variationName => {
-    return artifactSet.passive[variationName].threshold === maxThreshold;
+    return artifactSet.setEffects[variationName].threshold === maxThreshold;
   });
 
   return possibleVariations;
 }
 
+function getAttributesBuffed(artifactSet, effectVariationName) {
+  const attrsBuffed = Object.keys(artifactSet.setEffects[effectVariationName]);
+  attrsBuffed.splice(0, 2);
+
+  return attrsBuffed;
+}
+
 // returns the currently equiped artifact set, with only the correct passive bonuses
 // based on equipedPiecesAmt and the selected passive variation, based on buffVariationName
-function getEquippedArtifactSet(artifactSet, equipedPiecesAmt, buffVariationName) {
+function getEquippedArtifactSet(artifactSet, equipedPiecesAmt, effectVariationName) {
   const buffVariations = getPossibleArtifactPassives(artifactSet, equipedPiecesAmt);
 
-  if (!buffVariations.includes(buffVariationName)) {
-    throw new Error(`Couldn't find buff "${buffVariationName}" on artifact set "${artifactSet.artifactSetName}" available buffs are "${buffVariations}"`);
+  if (!buffVariations.includes(effectVariationName)) {
+    throw new Error(`Couldn't find buff "${effectVariationName}" on artifact set "${artifactSet.artifactSetName}" available buffs are "${buffVariations}"`);
   }
 
+  const variationBuffs = getAttributesBuffed(artifactSet, effectVariationName);
   const artifactSetVariation = {
     artifactSetName: artifactSet.artifactSetName,
+    setEffects: {}
   };
 
-  let variationAttrs = [];
-  let variationVals = [];
-
-  artifactSet.passive.attrNames.forEach((attrName, index) => {
-    variationAttrs.push(attrName);
-    variationVals.push(artifactSet.passive[buffVariationName].attrValues[index]);
+  variationBuffs.forEach(attrName => {
+    artifactSetVariation.setEffects[attrName] = artifactSet.setEffects[effectVariationName][attrName];
   });
 
-  artifactSetVariation.passive = {
-    attrNames: variationAttrs,
-    attrValues: variationVals
-  }
-
-  artifactSetVariation.artifactSetName += ` ${artifactSet.passive[buffVariationName].variationName}`
+  artifactSetVariation.artifactSetName += ` ${artifactSet.setEffects[effectVariationName].variationName}`
   
   return artifactSetVariation;
 }

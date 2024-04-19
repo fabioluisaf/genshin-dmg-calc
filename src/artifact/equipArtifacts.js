@@ -2,14 +2,10 @@ import addToBuffList from "../character/buffs/addToBuffList.js";
 import { getEquippedArtifactSetsList } from "./artifactUtils.js";
 
 function equipPiece(char, artifactPiece) {
-  const mainStatName = artifactPiece.artifactMainStatName;
-  const mainStatVal = artifactPiece.artifactMainStatVal;
+  const artifactStatNames = Object.keys(artifactPiece.stats);
 
-  addToBuffList(char, mainStatName, mainStatVal);
-
-  artifactPiece.artifactSubstatsName.forEach((substatName, index) => {
-    const substatVal = artifactPiece.artifactSubstatsVal[index];
-    addToBuffList(char, substatName, substatVal);
+  artifactStatNames.forEach(statName => {
+    addToBuffList(char, statName, artifactPiece.stats[statName]);
   });
 }
 
@@ -19,9 +15,8 @@ function equipArtifacts(char, artifactPieces, buffVariationName) {
   artifactVariationsEquiped.forEach(set => {
     char.equipedArtifactSets.push(set.artifactSetName);
     
-    set.passive.attrNames.forEach((attrName, index) =>{
-      const buffVal = set.passive.attrValues[index];
-      addToBuffList(char, attrName, buffVal);
+    Object.keys(set.setEffects).forEach(attrName => {
+      addToBuffList(char, attrName, set.setEffects[attrName]);
     });
   });
 

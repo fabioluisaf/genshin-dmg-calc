@@ -12,12 +12,16 @@ import { getPossibleArtifactPassives } from "./artifact/artifactUtils.js";
 import applyBuffList from "./character/buffs/applyBuffList.js";
 
 const leveledGaming = buildLeveldChar(gaming, 80);
-const weaponBuffVariations = getBuffVariations(wgs);
+
 const equipedSets = equipedSetsAmts(artifactPieces);
-const artifactBuffVariations = getPossibleArtifactPassives(marechaussee, equipedSets[marechaussee.artifactSetName]);
+const equipedAmt = equipedSets[marechaussee.artifactSetName];
 
-equipWeapon(leveledGaming, wgs, 1, weaponBuffVariations[0]);
-equipArtifacts(leveledGaming, artifactPieces, artifactBuffVariations[0]);
-const newGaming = applyBuffList(leveledGaming);
+const chosenWeaponBuff = getBuffVariations(wgs.passives)[0];
+const chosenArtifactBuff = getPossibleArtifactPassives(marechaussee, equipedAmt)[0];
 
-console.log(newGaming);
+equipWeapon(leveledGaming, wgs, 1, chosenWeaponBuff);
+equipArtifacts(leveledGaming, artifactPieces, chosenArtifactBuff);
+
+const gamingAfterBuffs = applyBuffList(leveledGaming);
+
+console.log(gamingAfterBuffs);

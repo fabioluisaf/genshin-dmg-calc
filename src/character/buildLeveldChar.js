@@ -38,8 +38,9 @@ function buildLeveldChar(baseChar, level, hasAscended = true) {
     cdReduction: 0,
     shieldStrength: 0,
     pctDmgBonus: {},
-    attrBuffNames: [baseChar.bonusAttrName],
-    attrBuffValues: [bonusAttrValue],
+    buffList: {
+      [baseChar.bonusAttrName]: bonusAttrValue
+    }
   };
 
   return leveledChar

@@ -8,10 +8,8 @@ function equipWeapon(char, baseWeapon, refinementLevel, buffVariationName) {
 
   addToBuffList(char, refinedWeapon.substat, refinedWeapon.substatVal);
 
-  refinedWeapon.passive.attrNames.forEach((buff, weaponBuffIndex) => {
-    const buffVal = refinedWeapon.passive.attrValues[weaponBuffIndex];
-
-    addToBuffList(char, buff, buffVal);
+  Object.keys(refinedWeapon.passives).forEach(attrName => {
+    addToBuffList(char, attrName, refinedWeapon.passives[attrName]);
   });
 }
 

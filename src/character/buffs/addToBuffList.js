@@ -1,15 +1,9 @@
-function addToBuffList(char, attrBuffedName, attrBuffedVal) {
-  const charBuffs = char.attrBuffNames;
-  const charBuffVals = char.attrBuffValues;
-
-  if (!charBuffs.includes(attrBuffedName)) {
-    charBuffs.push(attrBuffedName);
-    charBuffVals.push(0);
+function addToBuffList(char, attrName, attrVal) {
+  if (!Object.keys(char.buffList).includes(attrName)) {
+    char.buffList[attrName] = 0;
   }
 
-  const charBuffIndex = charBuffs.indexOf(attrBuffedName);
-
-  charBuffVals[charBuffIndex] += attrBuffedVal;
+  char.buffList[attrName] += attrVal;
 }
 
 export default addToBuffList;

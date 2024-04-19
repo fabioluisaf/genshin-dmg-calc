@@ -1,6 +1,5 @@
-function getBuffVariations(equipment) {
-  const buffVariations = Object.keys(equipment.passive);
-  buffVariations.splice(0, 1);
+function getBuffVariations(equipmentBuffs) {
+  const buffVariations = Object.keys(equipmentBuffs);
 
   return buffVariations;
 }
