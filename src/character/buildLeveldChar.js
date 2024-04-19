@@ -1,5 +1,5 @@
-import getMultipliers from "./utils/statsMultipliers.js";
-import bonusAttrDict from "./utils/bonusAttributes.js";
+import getMultipliers from "./leveling/statsMultipliers.js";
+import bonusAttrDict from "./leveling/bonusAttributes.js";
 
 function buildLeveldChar(baseChar, level, hasAscended = true) {
   if (level > 90 || level < 1) {
