@@ -1,4 +1,4 @@
-import { gamingBase, gamingBaseTalents } from "./demo/demoChar.js";
+import { gamingBase, gamingBaseTalents, gamingPassiveTalents } from "./demo/demoChar.js";
 import wgs from "./demo/demoWeapon.js";
 import marechaussee from "./demo/demoArtifactSet.js";
 import artifactPieces from "./demo/demoArtifactPieces.js";
@@ -11,6 +11,8 @@ import { equipedSetsAmts } from "./artifact/artifactUtils.js";
 import { getPossibleArtifactPassives } from "./artifact/artifactUtils.js";
 import applyBuffList from "./character/buffs/applyBuffList.js";
 import talentsAtLevels from "./character/leveling/talentsAtLevels.js";
+import calculateTalentDmg from "./calculateDmg.js";
+import addToBuffList from "./character/buffs/addToBuffList.js";
 
 const leveledGaming = buildLeveldChar(gamingBase, 80);
 
@@ -22,8 +24,12 @@ const chosenArtifactBuff = getPossibleArtifactPassives(marechaussee, equipedAmt)
 
 equipWeapon(leveledGaming, wgs, 1, chosenWeaponBuff);
 equipArtifacts(leveledGaming, artifactPieces, chosenArtifactBuff);
+addToBuffList(leveledGaming, "charmedCloudstrider", gamingPassiveTalents.a4.charmedCloudstrider);
 
 const gamingAfterBuffs = applyBuffList(leveledGaming);
-const leveledTalents = talentsAtLevels(gamingBaseTalents, 1, 9, 9);
+const leveledTalents = talentsAtLevels(gamingBaseTalents, 9, 9, 9);
+
+const dmg = calculateTalentDmg(gamingAfterBuffs, {}, leveledTalents.elementalSkill);
 
 // console.log(gamingAfterBuffs);
+console.log(dmg);

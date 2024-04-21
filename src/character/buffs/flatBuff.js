@@ -2,8 +2,6 @@ const ATTR_NAMES_CONVERSION = {
   atkFlat: "bonusAtk",
   defFlat: "bonusDef",
   hpFlat: "bonusHp",
-  normalAtkPct: "normalAtkPct",
-  chargedAtkPct: "chargedAtkPct",
   critRate: "critRate",
   critDmg: "critDmg",
   er: "er",

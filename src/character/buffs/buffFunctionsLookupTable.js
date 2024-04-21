@@ -6,8 +6,6 @@ const BUFF_FUNCTIONS = {
   atkPct: applyPctBuff,
   defPct: applyPctBuff,
   hpPct: applyPctBuff,
-  normalAtkPct: applyFlatBuff,
-  chargedAtkPct: applyFlatBuff,
   critRate: applyFlatBuff,
   hpFlat: applyFlatBuff,
   atkFlat: applyFlatBuff,
@@ -23,8 +21,10 @@ const BUFF_FUNCTIONS = {
   dendroDmgBonus: applyDmgBonusPct,
   anemoDmgBonus: applyDmgBonusPct,
   cryoDmgBonus: applyDmgBonusPct,
-  chargedAtkPct: applyDmgBonusPct,
-  normalAtkPct: applyDmgBonusPct,
+  chargedAtk: applyDmgBonusPct,
+  normalAtk: applyDmgBonusPct,
+  elementalSkill: applyDmgBonusPct,
+  charmedCloudstrider: applyDmgBonusPct,
 };
 
 export default BUFF_FUNCTIONS;

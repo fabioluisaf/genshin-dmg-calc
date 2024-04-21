@@ -22,6 +22,7 @@ function buildLeveldChar(baseChar, level, hasAscended = true) {
     weaponType: baseChar.weaponType,
     equipedWeaponName: undefined,
     equipedArtifactSets: [],
+    buffs: [],
     bonusAttrName: baseChar.bonusAttrName,
     baseHp,
     baseAtk,
@@ -38,6 +39,18 @@ function buildLeveldChar(baseChar, level, hasAscended = true) {
     cdReduction: 0,
     shieldStrength: 0,
     pctDmgBonus: {},
+    additiveBaseDmgBonus: {},
+    baseDmgMultipliers: {},
+    enemyResReduction: {
+      physical: 0,
+      pyro: 0,
+      dendro: 0,
+      hydro: 0,
+      electro: 0,
+      anemo: 0,
+      cryo: 0,
+      geo: 0,
+    },
     buffList: {
       [baseChar.bonusAttrName]: bonusAttrValue
     }

@@ -7,10 +7,14 @@ function applyBuffList(char) {
   buffedAttrNames.forEach(attrName => {
     const buffFunction = BUFF_FUNCTIONS[attrName];
 
+    if (!buffFunction) {
+      throw new Error(`No buff function defined for ${attrName}`);
+    }
+
     buffFunction(newChar, attrName, newChar.buffList[attrName]);
   });
 
-  delete newChar.buffList;
+  newChar.buffList = {};
 
   return newChar;
 }

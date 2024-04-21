@@ -1,6 +1,4 @@
 const BUFFNAME_TO_BUFFTAG = {
-  normalAtkPct: "normalAtk",
-  chargedAtkPct: "chargedAtk",
   pyroDmgBonus: "pyro",
   hydroDmgBonus: "hydro",
   physicalDmgBonus: "physical",
@@ -12,7 +10,7 @@ const BUFFNAME_TO_BUFFTAG = {
 }
 
 function applyDmgBonusPct(char, attr, val) {
-  const buffTag = BUFFNAME_TO_BUFFTAG[attr];
+  const buffTag = BUFFNAME_TO_BUFFTAG[attr] ? BUFFNAME_TO_BUFFTAG[attr] : attr;
 
   if (!Object.keys(char.pctDmgBonus).includes(buffTag)) {
     char.pctDmgBonus[buffTag] = 0;
