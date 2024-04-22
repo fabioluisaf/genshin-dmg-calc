@@ -2,6 +2,7 @@ import { gamingBase, gamingBaseTalents, gamingPassiveTalents } from "./demo/demo
 import wgs from "./demo/demoWeapon.js";
 import marechaussee from "./demo/demoArtifactSet.js";
 import artifactPieces from "./demo/demoArtifactPieces.js";
+import RUIN_GUARD from "./demo/demoTarget.js"
 
 import buildLeveldChar from "./character/buildLeveldChar.js";
 import equipWeapon from "./weapon/equipWeapon.js";
@@ -29,7 +30,7 @@ addToBuffList(leveledGaming, "charmedCloudstrider", gamingPassiveTalents.a4.char
 const gamingAfterBuffs = applyBuffList(leveledGaming);
 const leveledTalents = talentsAtLevels(gamingBaseTalents, 9, 9, 9);
 
-const dmg = calculateTalentDmg(gamingAfterBuffs, {}, leveledTalents.elementalSkill);
+const dmg = calculateTalentDmg(gamingAfterBuffs, {}, leveledTalents.elementalSkill, []);
 
 // console.log(gamingAfterBuffs);
 console.log(dmg);

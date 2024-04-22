@@ -4,14 +4,14 @@ const BLANK_ENEMY = {
   level: 87,
   pctDmgReduction: {},
   resistances: {
-    physical: 0.7,
-    pyro: 0.1,
-    dendro: 0.1,
-    hydro: 0.1,
-    electro: 0.1,
-    anemo: 0.1,
-    cryo: 0.1,
-    geo: 0.1,
+    physical: 0,
+    pyro: 0,
+    dendro: 0,
+    hydro: 0,
+    electro: 0,
+    anemo: 0,
+    cryo: 0,
+    geo: 0,
   },
 };
 
@@ -53,7 +53,8 @@ function getResMult(baseResistance) {
 
 function getEnemyMults(target, char, defReduction, defIgnore, resReduction, dmgElement) {
   const defMultNumerator = 100 + char.level;
-  const defMulDenominator = (100 + char.level) + ((100 + target.level) * (1 - defReduction) * (1 - defIgnore));
+  const defMulDenominator = (100 + char.level) + 
+                            ((100 + target.level) * (1 - defReduction) * (1 - defIgnore));
 
   const resistance = target.resistances[dmgElement] - resReduction;
 
@@ -64,7 +65,15 @@ function getEnemyMults(target, char, defReduction, defIgnore, resReduction, dmgE
   return { enemyDefMult, enemyResMult};
 }
 
-function calculateTalentDmg(char, constelationBuffs, talent, talentModes = [], amplifying, transformative, target = BLANK_ENEMY) {
+function calculateTalentDmg(
+  char, 
+  constelationBuffs, 
+  talent, 
+  talentModes = [], 
+  target = BLANK_ENEMY,
+  amplifying, 
+  transformative
+) {
   if (talentModes.length !== 0) {
     allModesValid(talent, talentModes);
   } else {
@@ -80,7 +89,9 @@ function calculateTalentDmg(char, constelationBuffs, talent, talentModes = [], a
 
   const dmgPerMode = {};
   
-  const avgCritMult = effectiveAttrs.critRate*(1 + char.critDmg) + (1 - effectiveAttrs.critRate);
+  const avgCritMult = effectiveAttrs.critRate*(1 + char.critDmg) + 
+                      (1 - effectiveAttrs.critRate);
+
   const ampReactionMult = amplifyingMult(amplifying);
   const transReactionFlat = transformativeBonus(transformative);
 
@@ -89,36 +100,63 @@ function calculateTalentDmg(char, constelationBuffs, talent, talentModes = [], a
     modeTags.push(talent[mode].element);
 
     const scalingAttr = talent[mode].scalingAttr;
-    const scalingVal = effectiveAttrs[scalingAttr] ? effectiveAttrs[scalingAttr] : char[scalingAttr];
+    const scalingVal = effectiveAttrs[scalingAttr] ? 
+                       effectiveAttrs[scalingAttr] : 
+                       char[scalingAttr];
+
     const baseDmgMults = 1 + getDmgModifiers(char.baseDmgMultipliers, modeTags);
     const flatBaseDmgBonus = getDmgModifiers(char.additiveBaseDmgBonus, modeTags);
-    const effectiveBaseDmg = (talent[mode].mv * scalingVal * baseDmgMults) + flatBaseDmgBonus;
+    const mv = talent[mode].mv;
+    const effectiveBaseDmg = (mv * scalingVal * baseDmgMults) + flatBaseDmgBonus;
 
     const dmgBonus = getDmgModifiers(char.pctDmgBonus, modeTags);
     const targetDmgReduction = getDmgModifiers(target.pctDmgReduction, modeTags);
     const effectiveDmgBonus = 1 + dmgBonus - targetDmgReduction;
 
-    const constelationDefIgnore = constelationBuffs.defIgnore ? constelationBuffs.defIgnore : 0;
-    const constelationDefReduction = constelationBuffs.defReduction ? constelationBuffs.defReduction : 0;
-    const talentDefIgnore = talent[mode].defIgnore ? talent[mode].defIgnore : 0;
-    const talentDefReduction = talent[mode].defReduction ? talent[mode].defReduction : 0;
+    const constelationDefIgnore = constelationBuffs.defIgnore ? 
+                                  constelationBuffs.defIgnore : 
+                                  0;
 
-    const dmgElement = talent[mode].element;
-    const resReduction = char.enemyResReduction[dmgElement];
+    const constelationDefReduction = constelationBuffs.defReduction ? 
+                                     constelationBuffs.defReduction : 
+                                     0;
 
-    const defIgnore = constelationDefIgnore + talentDefIgnore;
-    const defReduction = constelationDefReduction + talentDefReduction;
+    const talentDefIgnore = talent[mode].defIgnore ? 
+                            talent[mode].defIgnore : 
+                            0;
 
-    const { enemyDefMult, enemyResMult } = getEnemyMults(target, char, defReduction, defIgnore, resReduction, dmgElement);
+    const talentDefReduction = talent[mode].defReduction ? 
+                               talent[mode].defReduction : 
+                               0;
 
-    const dmgBeforeCrit = (
+    let dmgBeforeCrit;
+
+    if (target !== BLANK_ENEMY) {
+      const dmgElement = talent[mode].element;
+      const resReduction = char.enemyResReduction[dmgElement];
+
+      const defIgnore = constelationDefIgnore + talentDefIgnore;
+      const defReduction = constelationDefReduction + talentDefReduction;
+
+      const { enemyDefMult, enemyResMult } = getEnemyMults(
+        target, char, defReduction, 
+        defIgnore, resReduction, dmgElement
+      );
+
+      dmgBeforeCrit = (
         effectiveBaseDmg * 
         effectiveDmgBonus * 
         enemyDefMult * 
         enemyResMult * 
         ampReactionMult
-      ) + 
-      transReactionFlat;
+      ) + transReactionFlat;
+    } else {
+      dmgBeforeCrit = (
+        effectiveBaseDmg * 
+        effectiveDmgBonus * 
+        ampReactionMult
+      ) + transReactionFlat;
+    }
 
     const dmgOnCrit = dmgBeforeCrit * (1 + char.critDmg);
     const avgDmg = dmgBeforeCrit * avgCritMult;
