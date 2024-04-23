@@ -6,7 +6,7 @@ const flower = {
     atkFlat: 18,
     critRate: 0.066,
     critDmg: 0.148,
-    er: 0.155
+    energyRecharge: 0.155
   }
 };
 
@@ -17,7 +17,7 @@ const feather = {
     atkFlat: 311,
     defPct: 0.117,
     critDmg: 0.194,
-    em: 23,
+    elementalMastery: 23,
     critRate: 0.078
   }
 };

@@ -1,11 +1,9 @@
-import getBuffVariations from "../getBuffVariations.js";
-
 function weaponAtRefinementLevel(weapon, refinementLevel, buffVariationName) {
   if (refinementLevel > 5 || refinementLevel < 1) {
     throw new Error(`Expected level between 1 and 5, but got ${refinementLevel}`);
   }
 
-  const buffVariations = getBuffVariations(weapon.passives);
+  const buffVariations = Object.keys(weapon.passives);
   
   if (!buffVariations.includes(buffVariationName)) {
     throw new Error(`Couldn't find buff "${buffVariationName}" on weapon "${weapon.weaponName}" available buffs are "${buffVariations}"`);
@@ -27,4 +25,4 @@ function weaponAtRefinementLevel(weapon, refinementLevel, buffVariationName) {
   return refinedWeapon;
 }
 
-export { getBuffVariations, weaponAtRefinementLevel };
+export default weaponAtRefinementLevel;

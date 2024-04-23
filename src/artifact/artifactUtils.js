@@ -1,4 +1,3 @@
-import getBuffVariations from "../getBuffVariations.js";
 import getArtifactSetsList from "./artifactList.js";
 
 // returns a dict of artifact sets equipped and their respective amounts
@@ -18,7 +17,7 @@ function equipedSetsAmts(artifactPieces) {
 
 // return a list of all possible passive variation names based on equipedAmt
 function getPossibleArtifactPassives(artifactSet, equipedAmt) {
-  const allVariations = getBuffVariations(artifactSet.setEffects);
+  const allVariations = Object.keys(artifactSet.setEffects);
   const setThresholds = [];
   
   allVariations.forEach(variationName => {

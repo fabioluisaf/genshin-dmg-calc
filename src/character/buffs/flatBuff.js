@@ -4,9 +4,9 @@ const ATTR_NAMES_CONVERSION = {
   hpFlat: "bonusHp",
   critRate: "critRate",
   critDmg: "critDmg",
-  er: "er",
+  energyRecharge: "energyRecharge",
   defPct: "defPct",
-  em: "em",
+  elementalMastery: "elementalMastery",
 };
 
 function applyFlatBuff(char, buffAttrName, val) {

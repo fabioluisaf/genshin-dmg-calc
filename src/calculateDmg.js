@@ -89,8 +89,7 @@ function calculateTalentDmg(
 
   const dmgPerMode = {};
   
-  const avgCritMult = effectiveAttrs.critRate*(1 + char.critDmg) + 
-                      (1 - effectiveAttrs.critRate);
+  const avgCritMult = 1 + effectiveAttrs.critRate*char.critDmg;
 
   const ampReactionMult = amplifyingMult(amplifying);
   const transReactionFlat = transformativeBonus(transformative);
