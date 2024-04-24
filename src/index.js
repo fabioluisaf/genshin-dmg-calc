@@ -13,9 +13,9 @@ import applyBuffList from "./character/buffs/applyBuffList.js";
 import talentsAtLevels from "./character/leveling/talentsAtLevels.js";
 import calculateTalentDmg from "./calculateDmg.js";
 import addToBuffList from "./character/buffs/addToBuffList.js";
+import fs from 'fs';
 import consumeAmbrApi from "./consume-ambr/index.js";
 import createCharFromAmbr from "./consume-ambr/createCharFromAmbr.js";
-import fs from 'fs';
 import createTalentsFromAmbr from "./consume-ambr/createTalentsFromAmbr.js";
 
 const leveledGaming = buildLeveldChar(gamingBase, 80);
@@ -43,4 +43,4 @@ const dmg = calculateTalentDmg(gamingAfterBuffs, {}, leveledTalents.elementalSki
 const charStr = await fs.promises.readFile('./src/consume-ambr/characterDataAmbr.json', 'utf-8');
 const charJSON = JSON.parse(charStr);
 
-console.log(createTalentsFromAmbr(charJSON.data));
+createTalentsFromAmbr(charJSON.data);
