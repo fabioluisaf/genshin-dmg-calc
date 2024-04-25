@@ -35,15 +35,26 @@ function doApiRequest(resource) {
 
 async function getAllCharacterIds() {
   const JSONRes = await doApiRequest('/v2/en/avatar?vh=46F0');
-  return Object.keys(JSONRes.data.items);
+  const namesAndIds = [];
+
+  (Object.keys(JSONRes.data.items)).forEach(charId => {
+    namesAndIds.push({
+      id: JSONRes.data.items[charId].id.toString(),
+      name: JSONRes.data.items[charId].route,
+    });
+  });
+
+  return namesAndIds;
 }
 
 async function consumeAmbrApi() {
-  const charIds = await getAllCharacterIds();
-  const charAmbrData = (await doApiRequest(`/v2/en/avatar/${charIds[0]}?vh=46F0`)).data;
-  const baseChar = createCharFromAmbr(charAmbrData);
+  const allChars = await getAllCharacterIds();
+  const desiredId = allChars.filter(char => char.name === 'Chiori')[0].id;
 
-  console.log(baseChar);
+  const charAmbrData = (await doApiRequest(`/v2/en/avatar/${desiredId}?vh=46F0`)).data;
+  // const baseChar = createCharFromAmbr(charAmbrData);
+
+  return charAmbrData;
 }
 
 export default consumeAmbrApi;

@@ -1,8 +1,11 @@
+import { ambrElementDict, ambrWeaponDict } from "./ambrDicts.js";
+import shouldIgnore from "./ignoreTalentModes.js";
+
 function getTalentModes(charAmbrData, talentNumber) {
   const basicAtkModes = [];
 
   charAmbrData.talent[talentNumber].promote['1'].description
-  .filter(mode => mode !== '')
+  .filter(mode => mode !== '' && !shouldIgnore(mode))
   .forEach(mode => {
     const newName = mode.split('|')[0];
     
@@ -28,13 +31,43 @@ function getAllModeMvs(charAmbrData, talentNum, modeIndex) {
   return mvs;
 }
 
+function basicAtkElement(charAmbrData, basicAtkMode) {
+  const weaponType = ambrWeaponDict[charAmbrData.weaponType];
+  const charElement = ambrElementDict[charAmbrData.element];
+
+  const chargedAtkRegex = /charged/i;
+  const plungeRegex = /plunge/i;
+
+  const isChargedAtk = !!chargedAtkRegex.exec(basicAtkMode);
+  const isPlunge = !!plungeRegex.exec(basicAtkMode);
+
+  const convert = (isChargedAtk && (weaponType === 'catalyst' || weaponType === 'bow')) ||
+                  (isPlunge && weaponType === 'catalyst');
+  
+  return convert ? charElement : 'physical';
+}
+
+function getElementFromText(charAmbrData, talentNum, talentMode) {
+  return ambrElementDict[charAmbrData.element];
+}
+
+function getElement(charAmbrData, talentNum, talentMode) {
+  if(talentNum === '0') {
+    return basicAtkElement(charAmbrData, talentMode);
+  }
+
+  return getElementFromText(charAmbrData, talentNum, talentMode);
+}
+
 function getTalentData(charAmbrData, talentNum) {
   const talentModes = getTalentModes(charAmbrData, talentNum);
   const talentData = {};
 
   talentModes.forEach((mode, modeIndex) => {
-    talentData[mode] = getAllModeMvs(charAmbrData, talentNum, modeIndex);
-
+    talentData[mode] = {
+      mv: getAllModeMvs(charAmbrData, talentNum, modeIndex),
+      element: getElement(charAmbrData, talentNum, mode),
+    };
   });
   
   return talentData;

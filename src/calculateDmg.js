@@ -95,6 +95,7 @@ function calculateTalentDmg(
   const transReactionFlat = transformativeBonus(transformative);
 
   talentModes.forEach(mode => {
+    // talent[mode].mainTag
     const modeTags = [...talent[mode].otherTags];
     modeTags.push(talent[mode].element);
 
