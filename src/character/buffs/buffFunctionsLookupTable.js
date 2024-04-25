@@ -13,18 +13,6 @@ const BUFF_FUNCTIONS = {
   energyRecharge: applyFlatBuff,
   elementalMastery: applyFlatBuff,
   defFlat: applyFlatBuff,
-  pyroDmgBonus: applyDmgBonusPct,
-  hydroDmgBonus: applyDmgBonusPct,
-  physicalDmgBonus: applyDmgBonusPct,
-  electroDmgBonus: applyDmgBonusPct,
-  geoDmgBonus: applyDmgBonusPct,
-  dendroDmgBonus: applyDmgBonusPct,
-  anemoDmgBonus: applyDmgBonusPct,
-  cryoDmgBonus: applyDmgBonusPct,
-  chargedAtk: applyDmgBonusPct,
-  normalAtk: applyDmgBonusPct,
-  elementalSkill: applyDmgBonusPct,
-  charmedCloudstrider: applyDmgBonusPct,
 };
 
 export default BUFF_FUNCTIONS;

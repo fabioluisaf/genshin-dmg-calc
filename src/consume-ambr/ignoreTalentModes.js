@@ -1,4 +1,4 @@
-const IGNORE_REGEXES = [/Cost/, /CD/, /Duration/, /Spiritbreath Thorn/];
+const IGNORE_REGEXES = [/Cost/, /CD/, /Duration/, /Spiritbreath Thorn/, /Interval/];
 
 function shouldIgnore(talentModeName) {
   let ignore = false;

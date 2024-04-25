@@ -1,4 +1,4 @@
-import { gamingBase, gamingBaseTalents, gamingPassiveTalents } from "./demo/demoChar.js";
+import { gamingPassiveTalents } from "./demo/demoChar.js";
 import wgs from "./demo/demoWeapon.js";
 import marechaussee from "./demo/demoArtifactSet.js";
 import artifactPieces from "./demo/demoArtifactPieces.js";
@@ -19,35 +19,26 @@ import createCharFromAmbr from "./consume-ambr/createCharFromAmbr.js";
 import createTalentsFromAmbr from "./consume-ambr/createTalentsFromAmbr.js";
 import { readFromFile, writeToFile } from './files.js'
 
-// const leveledGaming = buildLeveldChar(gamingBase, 80);
+const gamingAmbrData = await readFromFile('gaming');
+const gamingBase = createCharFromAmbr(gamingAmbrData);
+const gamingBaseTalents = createTalentsFromAmbr(gamingAmbrData);
 
-// const equipedSets = equipedSetsAmts(artifactPieces);
-// const equipedAmt = equipedSets[marechaussee.artifactSetName];
+const leveledGaming = buildLeveldChar(gamingBase, 80);
 
-// const chosenWeaponBuff = Object.keys(wgs.passives)[0];
-// const chosenArtifactBuff = getPossibleArtifactPassives(marechaussee, equipedAmt)[0];
+const equipedSets = equipedSetsAmts(artifactPieces);
+const equipedAmt = equipedSets[marechaussee.artifactSetName];
 
-// equipWeapon(leveledGaming, wgs, 1, chosenWeaponBuff);
-// equipArtifacts(leveledGaming, artifactPieces, chosenArtifactBuff);
-// addToBuffList(leveledGaming, "charmedCloudstrider", gamingPassiveTalents.a4.charmedCloudstrider);
+const chosenWeaponBuff = Object.keys(wgs.passives)[0];
+const chosenArtifactBuff = getPossibleArtifactPassives(marechaussee, equipedAmt)[0];
 
-// const gamingAfterBuffs = applyBuffList(leveledGaming);
-// const leveledTalents = talentsAtLevels(gamingBaseTalents, 9, 9, 9);
+equipWeapon(leveledGaming, wgs, 1, chosenWeaponBuff);
+equipArtifacts(leveledGaming, artifactPieces, chosenArtifactBuff);
+addToBuffList(leveledGaming, "plunging attack: charmed cloudstrider", gamingPassiveTalents.a4.charmedCloudstrider);
 
-// const dmg = calculateTalentDmg(gamingAfterBuffs, {}, leveledTalents.elementalSkill, []);
+const gamingAfterBuffs = applyBuffList(leveledGaming);
+const leveledTalents = talentsAtLevels(gamingBaseTalents, 9, 9, 9);
+
+const dmg = calculateTalentDmg(gamingAfterBuffs, {}, leveledTalents.elementalSkill, []);
 
 // console.log(gamingAfterBuffs);
 // console.log(dmg);
-
-
-const charAmbrData = (await readFromFile('gaming')).data;
-createTalentsFromAmbr(charAmbrData);
-
-// #########################################################################
-// TODO
-
-// correctly read data from json of characters with split scaling and
-// multiple dmg instances on the same dmg instance (line 10 on the 
-// createTalentsFromAmbr.js file)
-
-// #########################################################################

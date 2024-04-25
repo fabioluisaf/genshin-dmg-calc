@@ -15,10 +15,14 @@ const BLANK_ENEMY = {
   },
 };
 
-function allModesValid(motionValuesList, mvNames) {
-  mvNames.forEach(mvName => {
-    if (!Object.keys(motionValuesList).includes(mvName)) {
-      throw new Error(`Couldn't find ${mvName} on list ${motionValuesList}`);
+function allModesValid(modeList, modeNames) {
+  const allModeNames = modeList.map(mode => {
+    return mode.name;
+  });
+
+  modeNames.forEach(name => {
+    if (!allModeNames.includes(name)) {
+      throw new Error(`Couldn't find ${name} on list ${allModeNames}`);
     }
   });
 }
@@ -65,19 +69,23 @@ function getEnemyMults(target, char, defReduction, defIgnore, resReduction, dmgE
   return { enemyDefMult, enemyResMult};
 }
 
+// WARNING: Currently doesn't take into consideration
+// defense reduction/ignore from pasive talents
 function calculateTalentDmg(
   char, 
   constelationBuffs, 
   talent, 
-  talentModes = [], 
+  talentModeNames = [], 
   target = BLANK_ENEMY,
   amplifying, 
   transformative
 ) {
-  if (talentModes.length !== 0) {
-    allModesValid(talent, talentModes);
+  if (talentModeNames.length !== 0) {
+    allModesValid(talent, talentModeNames);
   } else {
-    talentModes = Object.keys(talent);
+    talentModeNames = talent.map(mode => {
+      return mode.name;
+    });
   }
 
   const effectiveAttrs = {
@@ -94,19 +102,25 @@ function calculateTalentDmg(
   const ampReactionMult = amplifyingMult(amplifying);
   const transReactionFlat = transformativeBonus(transformative);
 
-  talentModes.forEach(mode => {
-    // talent[mode].mainTag
-    const modeTags = [...talent[mode].otherTags];
-    modeTags.push(talent[mode].element);
+  talentModeNames.forEach(modeName => {
+    const talentMode = talent.filter(mode => {
+      return mode.name === modeName;
+    })[0];
+    // talentMode.mainTag
+    const modeTags = [...talentMode.otherTags];
+    modeTags.push(talentMode.element);
 
-    const scalingAttr = talent[mode].scalingAttr;
+    const scalingAttr = talentMode.scalingAttr;
     const scalingVal = effectiveAttrs[scalingAttr] ? 
                        effectiveAttrs[scalingAttr] : 
                        char[scalingAttr];
 
     const baseDmgMults = 1 + getDmgModifiers(char.baseDmgMultipliers, modeTags);
     const flatBaseDmgBonus = getDmgModifiers(char.additiveBaseDmgBonus, modeTags);
-    const mv = talent[mode].mv;
+    const mv = talentMode.mv;
+
+    // console.log(`scalingAttr: ${scalingAttr}`);
+
     const effectiveBaseDmg = (mv * scalingVal * baseDmgMults) + flatBaseDmgBonus;
 
     const dmgBonus = getDmgModifiers(char.pctDmgBonus, modeTags);
@@ -121,22 +135,14 @@ function calculateTalentDmg(
                                      constelationBuffs.defReduction : 
                                      0;
 
-    const talentDefIgnore = talent[mode].defIgnore ? 
-                            talent[mode].defIgnore : 
-                            0;
-
-    const talentDefReduction = talent[mode].defReduction ? 
-                               talent[mode].defReduction : 
-                               0;
-
     let dmgBeforeCrit;
 
     if (target !== BLANK_ENEMY) {
-      const dmgElement = talent[mode].element;
+      const dmgElement = talentMode.element;
       const resReduction = char.enemyResReduction[dmgElement];
 
-      const defIgnore = constelationDefIgnore + talentDefIgnore;
-      const defReduction = constelationDefReduction + talentDefReduction;
+      const defIgnore = constelationDefIgnore;
+      const defReduction = constelationDefReduction;
 
       const { enemyDefMult, enemyResMult } = getEnemyMults(
         target, char, defReduction, 
@@ -161,7 +167,7 @@ function calculateTalentDmg(
     const dmgOnCrit = dmgBeforeCrit * (1 + char.critDmg);
     const avgDmg = dmgBeforeCrit * avgCritMult;
     
-    dmgPerMode[mode] = {
+    dmgPerMode[modeName] = {
       dmgNoCrit: dmgBeforeCrit,
       dmgOnCrit,
       avgDmg

@@ -1,4 +1,5 @@
 import BUFF_FUNCTIONS from "./buffFunctionsLookupTable.js";
+import { applyDmgBonusPct } from "./dmgBonusPct.js";
 
 function applyBuffList(char) {
   const buffedAttrNames = Object.keys(char.buffList);
@@ -8,7 +9,8 @@ function applyBuffList(char) {
     const buffFunction = BUFF_FUNCTIONS[attrName];
 
     if (!buffFunction) {
-      throw new Error(`No buff function defined for ${attrName}`);
+      applyDmgBonusPct(newChar, attrName, newChar.buffList[attrName]);
+      return;
     }
 
     buffFunction(newChar, attrName, newChar.buffList[attrName]);
