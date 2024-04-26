@@ -7,15 +7,16 @@ import applyBuffList from "./character/buffs/applyBuffList.js";
 import talentsAtLevels from "./character/leveling/talentsAtLevels.js";
 import calculateTalentDmg from "./calculateDmg.js";
 import addToBuffList from "./character/buffs/addToBuffList.js";
-import consumeAmbrApi from "./consume-ambr/index.js";
-import createCharFromAmbr from "./consume-ambr/char/createCharFromAmbr.js";
+import createCharFromAmbr from "./consume-ambr/createCharFromAmbr.js";
 import createTalentsFromAmbr from "./consume-ambr/talents/createTalentsFromAmbr.js";
 import { readFromFile, writeToFile } from './files.js'
 import equipArtifactSet from "./character/equipArtifactSet.js";
+import { getArtifactSetData, getCharData, getFullCharData, getWeaponData } from "./consume-ambr/dataFromApi.js";
 
 const charAmbrData = await readFromFile('gaming');
 const baseChar = createCharFromAmbr(charAmbrData);
 const charBaseTalents = createTalentsFromAmbr(charAmbrData);
+const baseWeapon = await readFromFile('wgs');
 
 const leveledChar = buildLeveldChar(baseChar, 80);
 
@@ -30,5 +31,7 @@ const leveledTalents = talentsAtLevels(charBaseTalents, 9, 9, 9);
 
 const dmg = calculateTalentDmg(charAfterBuffs, {}, leveledTalents.elementalSkill, []);
 
-console.log(charAfterBuffs);
+// console.log(charAfterBuffs);
 // console.log(dmg);
+
+console.log(baseWeapon);

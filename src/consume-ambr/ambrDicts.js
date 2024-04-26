@@ -37,3 +37,13 @@ export const ambrPropDict = {
   FIGHT_PROP_BASE_ATTACK: 'Atk',
   FIGHT_PROP_BASE_DEFENSE: 'Def',
 };
+export const ambrWeaponSubstatDict = {
+  FIGHT_PROP_ATTACK_PERCENT: 'atkPct',
+  FIGHT_PROP_CRITICAL: 'critRate',
+  FIGHT_PROP_CRITICAL_HURT: 'critDmg',
+  FIGHT_PROP_DEFENSE_PERCENT: 'defPct',
+  FIGHT_PROP_ELEMENT_MASTERY: 'elementalMastery',
+  FIGHT_PROP_CHARGE_EFFICIENCY: 'energyRecharge',
+  FIGHT_PROP_HP_PERCENT: 'hpPct',
+  FIGHT_PROP_PHYSICAL_ADD_HURT: 'physicalDmgBonus',
+}
