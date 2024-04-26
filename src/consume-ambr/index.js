@@ -1,5 +1,5 @@
 import https from 'https';
-import createCharFromAmbr from './createCharFromAmbr.js';
+import createCharFromAmbr from './char/createCharFromAmbr.js';
 
 // /v2/en/avatar?vh=46F0 <- path for getting all characters
 // /v2/en/avatar/{id}?vh=46F0 <- path for getting specific character, swap {id} for the character id
@@ -49,10 +49,9 @@ async function getAllCharacterIds() {
 
 async function consumeAmbrApi() {
   const allChars = await getAllCharacterIds();
-  const desiredId = allChars.filter(char => char.name === 'Chiori')[0].id;
+  const desiredId = allChars.filter(char => char.name === 'Yoimiya')[0].id;
 
   const charAmbrData = (await doApiRequest(`/v2/en/avatar/${desiredId}?vh=46F0`)).data;
-  // const baseChar = createCharFromAmbr(charAmbrData);
 
   return charAmbrData;
 }

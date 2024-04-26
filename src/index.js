@@ -1,44 +1,34 @@
-import { gamingPassiveTalents } from "./demo/demoChar.js";
 import wgs from "./demo/demoWeapon.js";
 import marechaussee from "./demo/demoArtifactSet.js";
-import artifactPieces from "./demo/demoArtifactPieces.js";
-import RUIN_GUARD from "./demo/demoTarget.js"
 
 import buildLeveldChar from "./character/buildLeveldChar.js";
 import equipWeapon from "./weapon/equipWeapon.js";
-import { equipArtifacts } from "./artifact/equipArtifacts.js";
-import { equipedSetsAmts } from "./artifact/artifactUtils.js";
-import { getPossibleArtifactPassives } from "./artifact/artifactUtils.js";
 import applyBuffList from "./character/buffs/applyBuffList.js";
 import talentsAtLevels from "./character/leveling/talentsAtLevels.js";
 import calculateTalentDmg from "./calculateDmg.js";
 import addToBuffList from "./character/buffs/addToBuffList.js";
-import fs from 'fs';
 import consumeAmbrApi from "./consume-ambr/index.js";
-import createCharFromAmbr from "./consume-ambr/createCharFromAmbr.js";
-import createTalentsFromAmbr from "./consume-ambr/createTalentsFromAmbr.js";
+import createCharFromAmbr from "./consume-ambr/char/createCharFromAmbr.js";
+import createTalentsFromAmbr from "./consume-ambr/talents/createTalentsFromAmbr.js";
 import { readFromFile, writeToFile } from './files.js'
+import equipArtifactSet from "./character/equipArtifactSet.js";
 
-const gamingAmbrData = await readFromFile('gaming');
-const gamingBase = createCharFromAmbr(gamingAmbrData);
-const gamingBaseTalents = createTalentsFromAmbr(gamingAmbrData);
+const charAmbrData = await readFromFile('gaming');
+const baseChar = createCharFromAmbr(charAmbrData);
+const charBaseTalents = createTalentsFromAmbr(charAmbrData);
 
-const leveledGaming = buildLeveldChar(gamingBase, 80);
-
-const equipedSets = equipedSetsAmts(artifactPieces);
-const equipedAmt = equipedSets[marechaussee.artifactSetName];
+const leveledChar = buildLeveldChar(baseChar, 80);
 
 const chosenWeaponBuff = Object.keys(wgs.passives)[0];
-const chosenArtifactBuff = getPossibleArtifactPassives(marechaussee, equipedAmt)[0];
 
-equipWeapon(leveledGaming, wgs, 1, chosenWeaponBuff);
-equipArtifacts(leveledGaming, artifactPieces, chosenArtifactBuff);
-addToBuffList(leveledGaming, "plunging attack: charmed cloudstrider", gamingPassiveTalents.a4.charmedCloudstrider);
+equipWeapon(leveledChar, wgs, 1, chosenWeaponBuff);
+equipArtifactSet(leveledChar, marechaussee, "4pcs (3 stacks)");
+addToBuffList(leveledChar, "plunging attack: charmed cloudstrider", 0.2); // Talent: Air of Prosperity
 
-const gamingAfterBuffs = applyBuffList(leveledGaming);
-const leveledTalents = talentsAtLevels(gamingBaseTalents, 9, 9, 9);
+const charAfterBuffs = applyBuffList(leveledChar);
+const leveledTalents = talentsAtLevels(charBaseTalents, 9, 9, 9);
 
-const dmg = calculateTalentDmg(gamingAfterBuffs, {}, leveledTalents.elementalSkill, []);
+const dmg = calculateTalentDmg(charAfterBuffs, {}, leveledTalents.elementalSkill, []);
 
-// console.log(gamingAfterBuffs);
+console.log(charAfterBuffs);
 // console.log(dmg);

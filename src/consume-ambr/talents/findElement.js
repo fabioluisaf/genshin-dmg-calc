@@ -1,4 +1,4 @@
-import { ambrElementDict, ambrWeaponDict } from "./ambrDicts.js";
+import { ambrElementDict, ambrWeaponDict } from "../ambrDicts.js";
 
 function basicAtkElement(charAmbrData, basicAtkMode) {
   const weaponType = ambrWeaponDict[charAmbrData.weaponType];

@@ -1,6 +1,7 @@
 import clamp from "./clamp.js";
 
 const BLANK_ENEMY = {
+  name: "No enemy",
   level: 87,
   pctDmgReduction: {},
   resistances: {
@@ -168,9 +169,10 @@ function calculateTalentDmg(
     const avgDmg = dmgBeforeCrit * avgCritMult;
     
     dmgPerMode[modeName] = {
+      target: target.name,
       dmgNoCrit: dmgBeforeCrit,
       dmgOnCrit,
-      avgDmg
+      avgDmg,
     };
   });
 

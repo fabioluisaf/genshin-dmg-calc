@@ -67,8 +67,8 @@ function handleStackedModes(nameData, mvData) {
     const scalingAttr = getScalingFromMvData(scaling);
     const inferredElement = getElementFromMvData(scaling);
     const subModeName = inferredElement !== '' ?
-                        `${nameData} | ${inferredElement}` :
-                        `${nameData} | ${scalingAttr.toUpperCase()}`;
+                        `${nameData} | ${inferredElement} - Hit ${index+1}` :
+                        `${nameData} | ${scalingAttr.toUpperCase()} - Hit ${index+1}`;
 
     modes.push(handleRegularMode(subModeName, scaling));
   });

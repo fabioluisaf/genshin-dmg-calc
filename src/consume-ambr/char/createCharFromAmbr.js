@@ -1,4 +1,4 @@
-import { ambrPropDict, ambrBonusAttrDict, ambrElementDict, ambrWeaponDict } from "./ambrDicts.js";
+import { ambrPropDict, ambrBonusAttrDict, ambrElementDict, ambrWeaponDict } from "../ambrDicts.js";
 
 function getBaseStats(charAmbrData) {
   const baseStats = {}
