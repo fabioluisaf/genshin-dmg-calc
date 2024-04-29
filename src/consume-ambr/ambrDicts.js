@@ -16,12 +16,12 @@ export const ambrWeaponDict = {
 };
 export const ambrBonusAttrDict = {
   FIGHT_PROP_CRITICAL_HURT: 'critDmg',
+  FIGHT_PROP_CRITICAL: 'critRate',
   FIGHT_PROP_HEAL_ADD: 'healingBonus',
   FIGHT_PROP_ATTACK_PERCENT: 'atkPct',
   FIGHT_PROP_ELEMENT_MASTERY: 'elementalMastery',
   FIGHT_PROP_HP_PERCENT: 'hpPct',
   FIGHT_PROP_CHARGE_EFFICIENCY: 'energyRecharge',
-  FIGHT_PROP_CRITICAL: 'critRate',
   FIGHT_PROP_PHYSICAL_ADD_HURT: 'physicalDmgBonus',
   FIGHT_PROP_ELEC_ADD_HURT: 'electroDmgBonus',
   FIGHT_PROP_ROCK_ADD_HURT: 'geoDmgBonus',

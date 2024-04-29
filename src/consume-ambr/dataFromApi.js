@@ -2,12 +2,12 @@ import doApiRequest from './doApiRequest.js';
 
 async function getIdsAndNames(resource, getFullData) {
   const res = (await doApiRequest(`/v2/en/${resource}`));
-
+  
   if (getFullData) {
     return res;
   }
 
-  const resItems = res.items;
+  const resItems = res.data.items;
   const namesAndIds = [];
 
   (Object.keys(resItems)).forEach(charId => {
@@ -22,9 +22,9 @@ async function getIdsAndNames(resource, getFullData) {
 
 async function getData(resourceType, queryParam, name, getFullData = false) {
   const allItems = await getIdsAndNames(`${resourceType}?${queryParam}`, getFullData);
-
+  
   if (name) {
-    const desiredId = allItems.filter(item => item.name === name)[0].id;
+    const desiredId = allItems.filter(item => item.name.toLowerCase() === name.toLowerCase())[0].id;
     const ambrData = (await doApiRequest(`/v2/en/${resourceType}/${desiredId}?${queryParam}`)).data;
   
     return ambrData;

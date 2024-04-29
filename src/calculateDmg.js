@@ -58,12 +58,12 @@ function getResMult(baseResistance) {
 
 function getEnemyMults(target, char, defReduction, defIgnore, resReduction, dmgElement) {
   const defMultNumerator = 100 + char.level;
-  const defMulDenominator = (100 + char.level) + 
+  const defMultDenominator = (100 + char.level) + 
                             ((100 + target.level) * (1 - defReduction) * (1 - defIgnore));
 
   const resistance = target.resistances[dmgElement] - resReduction;
 
-  const enemyDefMult = defMultNumerator / defMulDenominator;
+  const enemyDefMult = defMultNumerator / defMultDenominator;
   const enemyResMult = getResMult(resistance);
 
 
@@ -107,9 +107,10 @@ function calculateTalentDmg(
     const talentMode = talent.filter(mode => {
       return mode.name === modeName;
     })[0];
-    // talentMode.mainTag
+
     const modeTags = [...talentMode.otherTags];
     modeTags.push(talentMode.element);
+    modeTags.push(talentMode.mainTag);
 
     const scalingAttr = talentMode.scalingAttr;
     const scalingVal = effectiveAttrs[scalingAttr] ? 

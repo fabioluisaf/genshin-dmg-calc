@@ -3,7 +3,7 @@ import weaponAtRefinementLevel from "./weaponAtRefinementLevel.js";
 
 function equipWeapon(char, baseWeapon, refinementLevel, buffVariationName) {
   const refinedWeapon = weaponAtRefinementLevel(baseWeapon, refinementLevel, buffVariationName);
-  char.equipedWeaponName = refinedWeapon.weaponName;
+  char.equipedWeaponName = refinedWeapon.name;
   char.baseAtk += refinedWeapon.baseAtk;
 
   addToBuffList(char, refinedWeapon.substat, refinedWeapon.substatVal);
