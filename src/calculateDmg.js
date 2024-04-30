@@ -2,8 +2,8 @@ import clamp from "./clamp.js";
 
 const BLANK_ENEMY = {
   name: "No enemy",
-  // level: 87,
-  // pctDmgReduction: {},
+  level: 87,
+  pctDmgReduction: {},
   // resistances: {
   //   physical: 0,
   //   pyro: 0,
@@ -74,7 +74,6 @@ function getEnemyMults(target, char, defReduction, defIgnore, resReduction, dmgE
 // defense reduction/ignore from pasive talents
 function calculateTalentDmg(
   char, 
-  constelationBuffs, 
   talent, 
   talentModeNames = [], 
   target = BLANK_ENEMY,
@@ -121,34 +120,24 @@ function calculateTalentDmg(
     const flatBaseDmgBonus = getDmgModifiers(char.additiveBaseDmgBonus, modeTags);
     const mv = talentMode.mv;
 
-    // console.log(`scalingAttr: ${scalingAttr}`);
-
     const effectiveBaseDmg = (mv * scalingVal * baseDmgMults) + flatBaseDmgBonus;
 
     const dmgBonus = getDmgModifiers(char.pctDmgBonus, modeTags);
     const targetDmgReduction = getDmgModifiers(target.pctDmgReduction, modeTags);
     const effectiveDmgBonus = 1 + dmgBonus - targetDmgReduction;
 
-    const constelationDefIgnore = constelationBuffs.defIgnore ? 
-                                  constelationBuffs.defIgnore : 
-                                  0;
-
-    const constelationDefReduction = constelationBuffs.defReduction ? 
-                                     constelationBuffs.defReduction : 
-                                     0;
-
     let dmgBeforeCrit;
 
     if (target !== BLANK_ENEMY) {
       const dmgElement = talentMode.element;
-      const resReduction = char.enemyResReduction[dmgElement];
-
-      const defIgnore = constelationDefIgnore;
-      const defReduction = constelationDefReduction;
 
       const { enemyDefMult, enemyResMult } = getEnemyMults(
-        target, char, defReduction, 
-        defIgnore, resReduction, dmgElement
+        target, 
+        char, 
+        char.enemyDefReduction, 
+        char.enemyDefIgnore, 
+        char.enemyResReduction[dmgElement], 
+        dmgElement
       );
 
       dmgBeforeCrit = (

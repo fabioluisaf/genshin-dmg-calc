@@ -13,9 +13,9 @@ function setTalentAtLevel(baseTalent, leveledTalent, level) {
 function talentsAtLevels(baseTalents, basicAtkLevel, elementalSkillLevel, elementalBurstLevel) {
   const leveledTalents = {...baseTalents};
 
-  setTalentAtLevel(baseTalents.basicAtk, leveledTalents.basicAtk, basicAtkLevel);
-  setTalentAtLevel(baseTalents.elementalSkill, leveledTalents.elementalSkill, elementalSkillLevel);
-  setTalentAtLevel(baseTalents.elementalBurst, leveledTalents.elementalBurst, elementalBurstLevel);
+  setTalentAtLevel(baseTalents['basic attack'], leveledTalents['basic attack'], basicAtkLevel);
+  setTalentAtLevel(baseTalents['elemental skill'], leveledTalents['elemental skill'], elementalSkillLevel);
+  setTalentAtLevel(baseTalents['elemental burst'], leveledTalents['elemental burst'], elementalBurstLevel);
 
   return leveledTalents;
 }

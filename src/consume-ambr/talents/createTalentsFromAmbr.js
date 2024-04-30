@@ -63,16 +63,27 @@ function modeNameAsTag(mode) {
   }
 }
 
-function talentNumAsTag(talentNum) {
-  const dict = {
-    '1': 'elemental skill',
-    '3': 'elemental burst',
+function talentNumAsTag(charAmbrData, talentNum) {
+  let dict;
+
+  if(charAmbrData.talent.hasOwnProperty('7')) {
+    dict = {
+      '1': 'elemental skill',
+      '4': 'elemental burst',
+    }
+  } else {
+    dict = {
+      '1': 'elemental skill',
+      '3': 'elemental burst',
+    }
   }
+
+  dict['0'] = 'basic attack';
 
   return dict[talentNum];
 }
 
-function appendOtherTags(modeArr, talentNum) {
+function appendOtherTags(charAmbrData, modeArr, talentNum) {
   modeArr.forEach(mode => {
     mode.otherTags = [];
     
@@ -82,12 +93,12 @@ function appendOtherTags(modeArr, talentNum) {
       const modeName = modeNameAsTag(mode);
       if (modeName !== '') mode.otherTags.push(modeName);
       
-      mode.otherTags.push(talentNumAsTag(talentNum));
+      mode.otherTags.push(talentNumAsTag(charAmbrData, talentNum));
     }
   });
 }
 
-function getTalentData(charAmbrData, talentNum) {
+function handleActiveTalent(charAmbrData, talentNum) {
   let talentModes = [];
 
   charAmbrData.talent[talentNum].promote['1'].description
@@ -97,7 +108,7 @@ function getTalentData(charAmbrData, talentNum) {
 
     appendMv(newModes, charAmbrData, talentNum);
     appendElement(newModes, charAmbrData, talentNum);
-    appendOtherTags(newModes, talentNum);
+    appendOtherTags(charAmbrData, newModes, talentNum);
 
     talentModes = talentModes.concat(newModes);
   });
@@ -105,16 +116,24 @@ function getTalentData(charAmbrData, talentNum) {
   return talentModes;
 }
 
-function createTalentsFromAmbr(charAmbrData) {
-  const basicAtk = getTalentData(charAmbrData, '0');
-  const elementalSkill = getTalentData(charAmbrData, '1');
-  const elementalBurst = getTalentData(charAmbrData, '3');
-
-  return {
-    basicAtk,
-    elementalSkill,
-    elementalBurst,
+function getTalentData(charAmbrData, talentNum) {
+  const isActiveTalent = charAmbrData.talent[talentNum].hasOwnProperty('promote');
+  
+  if (isActiveTalent && charAmbrData.talent[talentNum].promote.hasOwnProperty('2')) {
+    return handleActiveTalent(charAmbrData, talentNum);
   }
+}
+
+function createTalentsFromAmbr(charAmbrData) {
+  const talents = {};
+  const talentIds = Object.keys(charAmbrData.talent);
+
+  talentIds.forEach(talentId => {
+    talents[talentNumAsTag(charAmbrData, talentId)] = getTalentData(charAmbrData, talentId);
+  });
+
+
+  return talents;
 }
 
 export default createTalentsFromAmbr;

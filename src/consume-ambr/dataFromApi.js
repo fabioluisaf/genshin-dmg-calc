@@ -24,7 +24,11 @@ async function getData(resourceType, queryParam, name, getFullData = false) {
   const allItems = await getIdsAndNames(`${resourceType}?${queryParam}`, getFullData);
   
   if (name) {
-    const desiredId = allItems.filter(item => item.name.toLowerCase() === name.toLowerCase())[0].id;
+    const desiredChar = allItems.filter(item => item.name.match(new RegExp(name, 'i')));
+    if (!desiredChar) throw new Error(`Char named ${name} not found.`);
+
+    const desiredId = desiredChar[0].id;
+
     const ambrData = (await doApiRequest(`/v2/en/${resourceType}/${desiredId}?${queryParam}`)).data;
   
     return ambrData;
