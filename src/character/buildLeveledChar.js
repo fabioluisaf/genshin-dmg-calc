@@ -7,7 +7,7 @@ function buildLeveledChar(baseChar, level, hasAscended = true) {
   }
   
   const { levelMult, ascensionMult, bonusAttrMult, ascensionLevel } = getMultipliers(baseChar.rarity, level, hasAscended);
-  console.log(baseChar.name, baseChar.bonusAttrName)
+  
   const baseHp = baseChar.baseHp * levelMult + (ascensionMult * baseChar.maxAscensionHp);
   const baseAtk = baseChar.baseAtk * levelMult + (ascensionMult * baseChar.maxAscensionAtk);
   const baseDef = baseChar.baseDef * levelMult + (ascensionMult * baseChar.maxAscensionDef);

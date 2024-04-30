@@ -1,12 +1,8 @@
-import applyBuffList from "./character/buffs/applyBuffList.js";
 import buildLeveledChar from "./character/buildLeveledChar.js";
 import createCharFromAmbr from "./consume-ambr/createCharFromAmbr.js";
 import { getCharData } from "./consume-ambr/dataFromApi.js";
 import createCharCsv from "./csv-create/charCsvEntry.js";
-import { buildBonusBaseAttrs, buildElemPctStr } from "./csv-create/convertAttr.js";
 import { writeToFile } from "./files.js";
-
-const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 const allChars = await getCharData();
 let csvStr = '';
@@ -33,7 +29,7 @@ csvStr += 'DEF%,'
 csvStr += 'HP%,'
 csvStr += 'Healing Bonus\n'
 
-allChars.forEach(async (char) => {
+for (let char of allChars) {
   const charAmbrData = await getCharData(char.name);
   const baseChar = createCharFromAmbr(charAmbrData);
 
@@ -44,8 +40,8 @@ allChars.forEach(async (char) => {
   csvStr += '\n';
   csvStr += createCharCsv(charAt90);
   csvStr += '\n';
+  
+  console.log(char.name);
+}
 
-  // console.log(csvStr);
-});
-
-// await writeToFile('char-data', csvStr, 'csv');
+await writeToFile('char-data', csvStr, 'csv');

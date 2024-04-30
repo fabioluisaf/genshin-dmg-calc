@@ -13,6 +13,7 @@ const BUFF_FUNCTIONS = {
   energyRecharge: applyFlatBuff,
   elementalMastery: applyFlatBuff,
   defFlat: applyFlatBuff,
+  healingBonus: applyFlatBuff,
 };
 
 export default BUFF_FUNCTIONS;

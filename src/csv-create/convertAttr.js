@@ -1,22 +1,3 @@
-const BONUS_ATTR_DICT = {
-  'critDmg': 'CRIT DMG',
-  'critRate': 'CRIT RATE',
-  'atkPct': 'ATK%',
-  'hpPct': 'HP%',
-  'defPct': 'DEF%',
-  'energyRecharge': 'ER',
-  'elementalMastery': 'Elemental Mastery',
-  'healingBonus': 'Healing Bonus',
-  'physicalDmgBonus': 'Physical DMG Bonus',
-  'electroDmgBonus': 'Electro DMG Bonus',
-  'geoDmgBonus': 'Geo DMG Bonus',
-  'pyroDmgBonus': 'Pyro DMG Bonus',
-  'hydroDmgBonus': 'Hydro DMG Bonus',
-  'cryoDmgBonus': 'Cryo DMG Bonus',
-  'anemoDmgBonus': 'Anemo DMG Bonus',
-  'dendroDmgBonus': 'Dendro DMG Bonus',
-};
-
 function buildElemPctStr(charPctDmgBonus) {
   const charElem = Object.keys(charPctDmgBonus)[0];
   const elems = [
@@ -54,4 +35,4 @@ function buildBonusBaseAttrs(unbuffedChar) {
   return `${returnAtk}, ${returnDef}, ${returnHp}`
 }
 
-export { BONUS_ATTR_DICT, buildElemPctStr, buildBonusBaseAttrs };
+export { buildElemPctStr, buildBonusBaseAttrs };

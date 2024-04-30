@@ -6,7 +6,6 @@ async function readFromFile(fileName) {
 }
 
 async function writeToFile(fileName, dataStr, fileType) {
-  console.log(dataStr);
   fs.writeFile(`./out/${fileName}.${fileType}`, dataStr, err => {
     if (err) {
       console.error(err);

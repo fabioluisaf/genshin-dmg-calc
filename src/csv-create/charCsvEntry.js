@@ -17,7 +17,7 @@ function createCharCsv(charNoBuffs) {
   csvStr += `${char.energyRecharge}`;
   csvStr += buildElemPctStr(char.pctDmgBonus) + ', ';
   csvStr += buildBonusBaseAttrs(charNoBuffs) + ', ';
-  csvStr += `${char.healingBonus};`;
+  csvStr += `${char.healingBonus}`;
 
   return csvStr;
 }

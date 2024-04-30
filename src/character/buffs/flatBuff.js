@@ -7,6 +7,7 @@ const ATTR_NAMES_CONVERSION = {
   energyRecharge: "energyRecharge",
   defPct: "defPct",
   elementalMastery: "elementalMastery",
+  healingBonus: 'healingBonus',
 };
 
 function applyFlatBuff(char, buffAttrName, val) {
@@ -15,7 +16,7 @@ function applyFlatBuff(char, buffAttrName, val) {
   if (!attrToBuff) {
     throw new Error(`Didn't find matching attribute for ${buffAttrName}`);
   }
-
+  
   char[attrToBuff] += val;
 }
 
