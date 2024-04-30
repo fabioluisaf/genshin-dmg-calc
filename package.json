@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "node ./src/index.js",
-    "char-table": "node ./src/charTable.js"
+    "char-table": "node ./src/charTable.js",
+    "weapon-table": "node ./src/weaponTable.js"
   },
   "keywords": [],
   "author": "",

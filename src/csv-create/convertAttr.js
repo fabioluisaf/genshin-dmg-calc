@@ -7,7 +7,8 @@ function buildElemPctStr(charPctDmgBonus) {
     'hydro',
     'cryo',
     'anemo',
-    'dendro'
+    'dendro',
+    'physical'
   ];
 
   const finalStr = elems.reduce((prevStr, elem) => {

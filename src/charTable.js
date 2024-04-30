@@ -5,29 +5,8 @@ import createCharCsv from "./csv-create/charCsvEntry.js";
 import { writeToFile } from "./files.js";
 
 const allChars = await getCharData();
-let csvStr = '';
 
-csvStr += 'Name,';
-csvStr += 'Rarity,';
-csvStr += 'Element,';
-csvStr += 'Base HP,';
-csvStr += 'Base ATK,';
-csvStr += 'Base DEF,';
-csvStr += 'EM,';
-csvStr += 'CRIT RATE,';
-csvStr += 'CRIT DMG,';
-csvStr += 'ER,';
-csvStr += 'Electro DMG Bonus,';
-csvStr += 'Geo DMG Bonus,';
-csvStr += 'Pyro DMG Bonus,';
-csvStr += 'Hydro DMG Bonus,';
-csvStr += 'Cryo DMG Bonus,';
-csvStr += 'Anemo DMG Bonus,';
-csvStr += 'Dendro DMG Bonus,';
-csvStr += 'ATK%,'
-csvStr += 'DEF%,'
-csvStr += 'HP%,'
-csvStr += 'Healing Bonus\n'
+let csvStr = 'Name, Rarity, Element, Base HP, Base ATK, Base DEF, EM, CRIT RATE, CRIT DMG, ER, Electro DMG Bonus, Geo DMG Bonus, Pyro DMG Bonus, Hydro DMG Bonus, Cryo DMG Bonus, Anemo DMG Bonus, Dendro DMG Bonus, Physical DMG Bonus, ATK%, DEF%, HP%, Healing Bonus\n';
 
 for (let char of allChars) {
   const charAmbrData = await getCharData(char.name);

@@ -10,7 +10,6 @@ import { readFromFile, writeToFile } from './files.js'
 import { getCharData, getFullCharData, getFullWeaponData, getWeaponData } from "./consume-ambr/dataFromApi.js";
 import weaponAtRefinementLevel from "./weapon/weaponAtRefinementLevel.js";
 import createWeaponFromAmbr from "./consume-ambr/createWeaponFromAmbr.js";
-import fixWeapon from './manual-fixes/fixWeapon.js'
 
 const RUIN_GUARD = {
   name: "Ruin Guard",
@@ -37,8 +36,6 @@ const weaponAmbrData = await readFromFile('wgs');
 const baseChar = createCharFromAmbr(charAmbrData);
 const charBaseTalents = createTalentsFromAmbr(charAmbrData);
 const weapon = createWeaponFromAmbr(weaponAmbrData);
-
-fixWeapon(weapon);
 
 const leveledTalents = talentsAtLevels(charBaseTalents, 9, 9, 9);
 const leveledChar = buildLeveledChar(baseChar, 80);
