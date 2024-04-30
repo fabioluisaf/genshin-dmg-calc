@@ -1,3 +1,4 @@
+import { ASC_VALUE, LEVEL_MULT, MULT_TIER } from "../weapon/lookupTables.js";
 import { ambrWeaponSubstatDict } from "./ambrDicts.js";
 
 const STATS = ['ATK'];
@@ -6,7 +7,11 @@ const STATS_DICT = {
 }
 
 function getBaseAtk(weaponAmbrData) {
-  return weaponAmbrData.upgrade.prop[0].initValue;
+  const baseAtk = weaponAmbrData.upgrade.prop[0].initValue;
+  const rarity = weaponAmbrData.rank.toString();
+  const tier = MULT_TIER[rarity][baseAtk.toString()];
+
+  return baseAtk * LEVEL_MULT[rarity][tier-1] + ASC_VALUE[rarity];
 }
 
 function getSubstat(weaponAmbrData) {
@@ -69,10 +74,10 @@ function createWeaponFromAmbr(weaponAmbrData) {
     name: weaponAmbrData.route,
     type: weaponAmbrData.type.toLowerCase(),
     rarity: weaponAmbrData.rank,
-    level: 1,
+    level: 90,
     baseAtk: getBaseAtk(weaponAmbrData),
     substat: substatName,
-    substatVal: substatVal,
+    substatVal: substatVal * 4.594,
     passives: [passiveObj],
   };
 

@@ -2,18 +2,18 @@ import clamp from "./clamp.js";
 
 const BLANK_ENEMY = {
   name: "No enemy",
-  level: 87,
-  pctDmgReduction: {},
-  resistances: {
-    physical: 0,
-    pyro: 0,
-    dendro: 0,
-    hydro: 0,
-    electro: 0,
-    anemo: 0,
-    cryo: 0,
-    geo: 0,
-  },
+  // level: 87,
+  // pctDmgReduction: {},
+  // resistances: {
+  //   physical: 0,
+  //   pyro: 0,
+  //   dendro: 0,
+  //   hydro: 0,
+  //   electro: 0,
+  //   anemo: 0,
+  //   cryo: 0,
+  //   geo: 0,
+  // },
 };
 
 function allModesValid(modeList, modeNames) {
