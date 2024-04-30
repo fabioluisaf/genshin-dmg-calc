@@ -20,8 +20,15 @@ export function doApiRequest(path) {
       });
       
       res.on('end', () => {
-        const JSONRes = JSON.parse(fullRes);
-        resolve(JSONRes);
+        try {
+          const JSONRes = JSON.parse(fullRes);
+          resolve(JSONRes);
+        } catch (error) {
+          console.log(options.hostname + options.path);
+          console.log(fullRes);
+          reject(new Error('Invalid JSON'));
+        }
+        
       });
     });
     

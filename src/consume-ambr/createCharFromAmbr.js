@@ -29,7 +29,7 @@ function createCharFromAmbr(charAmbrData) {
 
   const baseChar = {
     id: charAmbrData.id.toString(),
-    charName: charAmbrData.route,
+    name: charAmbrData.route,
     rarity: charAmbrData.rank,
     baseHp,
     baseAtk,

@@ -1,4 +1,4 @@
-import buildLeveldChar from "./character/buildLeveldChar.js";
+import buildLeveledChar from "./character/buildLeveledChar.js";
 import equipWeapon from "./weapon/equipWeapon.js";
 import applyBuffList from "./character/buffs/applyBuffList.js";
 import talentsAtLevels from "./character/leveling/talentsAtLevels.js";
@@ -41,7 +41,7 @@ const weapon = createWeaponFromAmbr(weaponAmbrData);
 fixWeapon(weapon);
 
 const leveledTalents = talentsAtLevels(charBaseTalents, 9, 9, 9);
-const leveledChar = buildLeveldChar(baseChar, 80);
+const leveledChar = buildLeveledChar(baseChar, 80);
 
 equipWeapon(leveledChar, weapon, 1);
 addToBuffList(leveledChar, 'critRate', 0.36); // Marechaussee

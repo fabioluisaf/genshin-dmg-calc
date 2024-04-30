@@ -5,8 +5,9 @@ async function readFromFile(fileName) {
   return JSON.parse(charStr);
 }
 
-async function writeToFile(fileName, json) {
-  fs.writeFile(`./src/demo/${fileName}.json`, JSON.stringify(json), err => {
+async function writeToFile(fileName, dataStr, fileType) {
+  console.log(dataStr);
+  fs.writeFile(`./out/${fileName}.${fileType}`, dataStr, err => {
     if (err) {
       console.error(err);
     } else {
