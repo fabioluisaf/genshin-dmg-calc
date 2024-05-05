@@ -1,5 +1,6 @@
 import getMultipliers from "./leveling/statsMultipliers.js";
 import bonusAttrDict from "./leveling/bonusAttributes.js";
+import addBuff from "./buffs/addBuff.js";
 
 function buildLeveledChar(baseChar, level, hasAscended = true) {
   if (level > 90 || level < 1) {
@@ -22,6 +23,7 @@ function buildLeveledChar(baseChar, level, hasAscended = true) {
     weaponType: baseChar.weaponType,
     equipedWeaponName: undefined,
     bonusAttrName: baseChar.bonusAttrName,
+    bonusAttrVal: bonusAttrValue,
     baseHp,
     baseAtk,
     baseDef,
@@ -51,9 +53,6 @@ function buildLeveledChar(baseChar, level, hasAscended = true) {
     },
     enemyDefIgnore: 0,
     enemyDefReduction: 0,
-    buffList: {
-      [baseChar.bonusAttrName]: bonusAttrValue
-    }
   };
 
   return leveledChar

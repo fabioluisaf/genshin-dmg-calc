@@ -26,8 +26,9 @@ function createWeaponFromAmbr(weaponAmbrData) {
     rarity: weaponAmbrData.rank,
     level: 90,
     baseAtk: getBaseAtk(weaponAmbrData),
-    substat: substatName,
-    substatVal: substatVal * 4.594,
+    constantStats: {
+      [substatName]: substatVal * 4.594
+    }
   };
 
   return baseWeapon;

@@ -1,4 +1,4 @@
-import clamp from "./clamp.js";
+import clamp from "./utils/clamp.js";
 
 const BLANK_ENEMY = {
   name: "No enemy",
@@ -16,18 +16,6 @@ const BLANK_ENEMY = {
   // },
 };
 
-function allModesValid(modeList, modeNames) {
-  const allModeNames = modeList.map(mode => {
-    return mode.name;
-  });
-
-  modeNames.forEach(name => {
-    if (!allModeNames.includes(name)) {
-      throw new Error(`Couldn't find ${name} on list ${allModeNames}`);
-    }
-  });
-}
-
 function getDmgModifiers(dmgModifierList, dmgTags) {
   let dmgBonus = 0;
 
@@ -42,10 +30,6 @@ function amplifyingMult(reactionName) {
   return 1;
 }
 
-function transformativeBonus(reactionName) {
-  return 0;
-}
-
 function getResMult(baseResistance) {
   if (baseResistance < 0) {
     return 1 - (baseResistance/2);
@@ -56,7 +40,11 @@ function getResMult(baseResistance) {
   }
 }
 
-function getEnemyMults(target, char, defReduction, defIgnore, resReduction, dmgElement) {
+function getEnemyMults(target, char, dmgElement) {
+  const defReduction = char.enemyDefReduction;
+  const defIgnore = char.enemyDefIgnore;
+  const resReduction = char.enemyResReduction[dmgElement];
+
   const defMultNumerator = 100 + char.level;
   const defMultDenominator = (100 + char.level) + 
                             ((100 + target.level) * (1 - defReduction) * (1 - defIgnore));
@@ -72,22 +60,7 @@ function getEnemyMults(target, char, defReduction, defIgnore, resReduction, dmgE
 
 // WARNING: Currently doesn't take into consideration
 // defense reduction/ignore from pasive talents
-function calculateTalentDmg(
-  char, 
-  talent, 
-  talentModeNames = [], 
-  target = BLANK_ENEMY,
-  amplifying, 
-  transformative
-) {
-  if (talentModeNames.length !== 0) {
-    allModesValid(talent, talentModeNames);
-  } else {
-    talentModeNames = talent.map(mode => {
-      return mode.name;
-    });
-  }
-
+function calculateTalentDmg(char, talent, reaction = '', target = BLANK_ENEMY) {
   const effectiveAttrs = {
     atk: char.baseAtk + char.bonusAtk,
     def: char.baseDef + char.bonusDef,
@@ -96,25 +69,16 @@ function calculateTalentDmg(
   };
 
   const dmgPerMode = {};
-  
   const avgCritMult = 1 + effectiveAttrs.critRate*char.critDmg;
+  const ampReactionMult = amplifyingMult(reaction);
 
-  const ampReactionMult = amplifyingMult(amplifying);
-  const transReactionFlat = transformativeBonus(transformative);
-
-  talentModeNames.forEach(modeName => {
-    const talentMode = talent.filter(mode => {
-      return mode.name === modeName;
-    })[0];
-
+  talent.forEach(talentMode => {
+    const modeName = talentMode.name;
     const modeTags = [...talentMode.otherTags];
     modeTags.push(talentMode.element);
     modeTags.push(talentMode.mainTag);
 
-    const scalingAttr = talentMode.scalingAttr;
-    const scalingVal = effectiveAttrs[scalingAttr] ? 
-                       effectiveAttrs[scalingAttr] : 
-                       char[scalingAttr];
+    const scalingVal = effectiveAttrs[talentMode.scalingAttr] ? effectiveAttrs[talentMode.scalingAttr] : char[talentMode.scalingAttr];
 
     const baseDmgMults = 1 + getDmgModifiers(char.baseDmgMultipliers, modeTags);
     const flatBaseDmgBonus = getDmgModifiers(char.additiveBaseDmgBonus, modeTags);
@@ -126,43 +90,19 @@ function calculateTalentDmg(
     const targetDmgReduction = getDmgModifiers(target.pctDmgReduction, modeTags);
     const effectiveDmgBonus = 1 + dmgBonus - targetDmgReduction;
 
-    let dmgBeforeCrit;
+    const { enemyDefMult, enemyResMult } = getEnemyMults(target, char, talentMode.element);
+
+    let dmgBeforeCrit = effectiveBaseDmg * effectiveDmgBonus * ampReactionMult;
 
     if (target !== BLANK_ENEMY) {
-      const dmgElement = talentMode.element;
-
-      const { enemyDefMult, enemyResMult } = getEnemyMults(
-        target, 
-        char, 
-        char.enemyDefReduction, 
-        char.enemyDefIgnore, 
-        char.enemyResReduction[dmgElement], 
-        dmgElement
-      );
-
-      dmgBeforeCrit = (
-        effectiveBaseDmg * 
-        effectiveDmgBonus * 
-        enemyDefMult * 
-        enemyResMult * 
-        ampReactionMult
-      ) + transReactionFlat;
-    } else {
-      dmgBeforeCrit = (
-        effectiveBaseDmg * 
-        effectiveDmgBonus * 
-        ampReactionMult
-      ) + transReactionFlat;
+      dmgBeforeCrit *= enemyDefMult * enemyResMult;
     }
 
-    const dmgOnCrit = dmgBeforeCrit * (1 + char.critDmg);
-    const avgDmg = dmgBeforeCrit * avgCritMult;
-    
     dmgPerMode[modeName] = {
       target: target.name,
       dmgNoCrit: dmgBeforeCrit,
-      dmgOnCrit,
-      avgDmg,
+      dmgOnCrit: dmgBeforeCrit * (1 + char.critDmg),
+      avgDmg: dmgBeforeCrit * avgCritMult,
     };
   });
 

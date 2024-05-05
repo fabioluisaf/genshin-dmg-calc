@@ -1,16 +1,18 @@
-import addToBuffList from "../character/buffs/addToBuffList.js";
-import weaponAtRefinementLevel from "./weaponAtRefinementLevel.js";
+import addBuff from "../character/buffs/addBuff.js";
 
-function equipWeapon(char, baseWeapon, refinementLevel, buffVariationName) {
-  const refinedWeapon = weaponAtRefinementLevel(baseWeapon, refinementLevel, buffVariationName);
-  char.equipedWeaponName = refinedWeapon.name;
-  char.baseAtk += refinedWeapon.baseAtk;
+function equipWeapon(char, baseWeapon) {
+  const charWithWeapon = {...char};
 
-  addToBuffList(char, refinedWeapon.substat, refinedWeapon.substatVal);
+  charWithWeapon.equipedWeaponName = baseWeapon.name;
+  charWithWeapon.baseAtk += baseWeapon.baseAtk;
 
-  Object.keys(refinedWeapon.passives).forEach(attrName => {
-    addToBuffList(char, attrName, refinedWeapon.passives[attrName]);
-  });
+  addBuff(charWithWeapon, charWithWeapon.bonusAttrName, charWithWeapon.bonusAttrVal);
+
+  Object.keys(baseWeapon.constantStats).forEach(statName => {
+    addBuff(charWithWeapon, statName, baseWeapon.constantStats[statName]);
+  })
+
+  return charWithWeapon;
 }
 
 export default equipWeapon;

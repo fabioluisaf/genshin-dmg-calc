@@ -1,0 +1,10 @@
+{
+  "name": "Wolf's Gravestone",
+  "type": "claymore",
+  "rarity": 5,
+  "level": 90,
+  "baseAtk": 608.0745972,
+  "constantStats": {
+    "atkPct": 0.49615200000000004
+  }
+}

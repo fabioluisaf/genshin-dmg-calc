@@ -6,10 +6,13 @@
   "type": "module",
   "scripts": {
     "test": "node ./src/index.js",
-    "char-table": "node ./src/charTable.js",
-    "weapon-table": "node ./src/weaponTable.js"
+    "csv": "node ./src/consumeCsv.js"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "mongodb": "^6.6.0"
+  }
 }
