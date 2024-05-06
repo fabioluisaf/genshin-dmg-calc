@@ -8,8 +8,9 @@ import createTalentsFromAmbr from "./consume-ambr/talents/createTalentsFromAmbr.
 import { readFromFile, writeToFile } from './utils/files.js'
 import { getCharData, getFullCharData, getFullWeaponData, getWeaponData } from "./consume-ambr/dataFromApi.js";
 import createWeaponFromAmbr from "./consume-ambr/createWeaponFromAmbr.js";
-import { dbAllWeaponsOfType, dbFindWeapon } from "./db/weaponsDb.js";
+import { dbAllWeaponsOfType, dbFilterWeapons, dbFindWeapon } from "./db/weaponsDb.js";
 import { client } from "./db/dbConnect.js";
+import applyVariableBuff from "./character/buffs/variableBuff.js";
 
 const RUIN_GUARD = {
   name: "Ruin Guard",
@@ -27,8 +28,8 @@ const RUIN_GUARD = {
   },
 };
 
-const charAmbrData = await getCharData('raiden shogun');
-const weapon = await dbFindWeapon('Engulfing Lightning');
+const charAmbrData = await getCharData('albedo');
+const weapon = await dbFindWeapon('cinnabar');
 
 const baseChar = createCharFromAmbr(charAmbrData);
 const charBaseTalents = createTalentsFromAmbr(charAmbrData);
@@ -37,14 +38,21 @@ const leveledTalents = talentsAtLevels(charBaseTalents, 9, 9, 9);
 const leveledChar = buildLeveledChar(baseChar, 80);
 
 const charWithWeapon = equipWeapon(leveledChar, weapon, 1);
+addBuff(charWithWeapon, 'hpFlat', 7893);
+addBuff(charWithWeapon, 'atkFlat', 311);
+addBuff(charWithWeapon, 'defFlat', 1013);
+addBuff(charWithWeapon, 'critRate', 0.478);
+addBuff(charWithWeapon, 'critDmg', 0.396);
+addBuff(charWithWeapon, 'geoDmgBonus', 0.466);
+addBuff(charWithWeapon, 'defPct', 0.3);
 
-// add variable weapon buffs after all other buffs
+applyVariableBuff(charWithWeapon, weapon);
 
 // const dmgBA = calculateTalentDmg(charAfterBuffs, leveledTalents['basic attack']);
-// const dmgE = calculateTalentDmg(charWithWeapon, leveledTalents['elemental skill'], '', RUIN_GUARD);
+const dmgE = calculateTalentDmg(charWithWeapon, leveledTalents['elemental skill']);
 // const dmgQ = calculateTalentDmg(charAfterBuffs, leveledTalents['elemental burst']);
 
-// console.log(dmgE);
+console.log(dmgE);
 console.log(charWithWeapon);
 
 await client.close();

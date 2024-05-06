@@ -2,7 +2,7 @@ import clamp from "./utils/clamp.js";
 
 const BLANK_ENEMY = {
   name: "No enemy",
-  level: 87,
+  level: 90,
   pctDmgReduction: {},
   resistances: {
     physical: 0,
@@ -85,7 +85,7 @@ function calculateTalentDmg(char, talent, reaction = '', target = BLANK_ENEMY) {
     const baseDmgMults = 1 + getDmgModifiers(char.baseDmgMultipliers, modeTags);
     const flatBaseDmgBonus = getDmgModifiers(char.additiveBaseDmgBonus, modeTags);
     const mv = talentMode.mv;
-
+    
     const effectiveBaseDmg = (mv * scalingVal * baseDmgMults) + flatBaseDmgBonus;
 
     const dmgBonus = getDmgModifiers(char.pctDmgBonus, modeTags);

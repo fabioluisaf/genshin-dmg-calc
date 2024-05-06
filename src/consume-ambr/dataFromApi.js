@@ -24,10 +24,10 @@ async function getData(resourceType, queryParam, name, getFullData = false) {
   const allItems = await getIdsAndNames(`${resourceType}?${queryParam}`, getFullData);
   
   if (name) {
-    const desiredChar = allItems.filter(item => item.name.match(new RegExp(name, 'i')));
-    if (!desiredChar) throw new Error(`Char named ${name} not found.`);
+    const filteredItems = allItems.filter(item => item.name.match(new RegExp(name, 'i')));
+    if (filteredItems.length === 0) throw new Error(`Char named '${name}' not found.`);
 
-    const desiredId = desiredChar[0].id;
+    const desiredId = filteredItems[0].id;
 
     const ambrData = (await doApiRequest(`/v2/en/${resourceType}/${desiredId}?${queryParam}`)).data;
   

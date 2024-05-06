@@ -6,8 +6,13 @@ async function dbGetAllWeapons() {
 }
 
 async function dbFindWeapon(weaponName) {
-  const weapon = await weaponsCollection.findOne({ name: {$regex: weaponName} });
+  const weapon = await weaponsCollection.findOne({ name: {$regex: weaponName, $options: 'i'} });
 
+  return weapon;
+}
+
+async function dbFilterWeapons(filter) {
+  const weapon = await weaponsCollection.find(filter).toArray();
   return weapon;
 }
 
@@ -57,5 +62,6 @@ export {
   dbAllWeaponsOfType,
   dbAddWeapon,
   dbUpdateWeapon,
-  dbDeleteWeapon
+  dbDeleteWeapon,
+  dbFilterWeapons
 }
