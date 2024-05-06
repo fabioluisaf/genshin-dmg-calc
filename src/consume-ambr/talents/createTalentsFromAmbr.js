@@ -22,7 +22,7 @@ function appendMv(modeArr, charAmbrData, talentNum) {
 
 function appendElement(modeArr, charAmbrData, talentNum) {
   modeArr.forEach(mode => {
-    if (mode.mainTag !== 'attack') {
+    if (mode.mainTag !== 'dmg') {
       delete mode.inferredElement;
       // doesn't have an element
       return;
@@ -53,7 +53,7 @@ function basicAtkAsTag(basicAtkModeName) {
 }
 
 function modeNameAsTag(mode) {
-  if (mode.mainTag === 'attack') {
+  if (mode.mainTag === 'dmg') {
     const modeName = mode.name.match(/(.*) dmg/i)[1]
     return modeName === 'Skill' ? '' : modeName.toLowerCase();
   }

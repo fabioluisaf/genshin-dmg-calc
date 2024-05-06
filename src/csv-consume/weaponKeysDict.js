@@ -1,30 +1,24 @@
+const CSV_DICT = {
+  'Name': 'name',
+  'Type': 'type',
+  'Rarity': 'rarity',
+  'Base ATK': 'baseAtk',
+  'EM': 'elementalMastery',
+  'CRIT RATE': 'critRate',
+  'CRIT DMG': 'critDmg',
+  'ER': 'energyRecharge',
+  'Physical DMG': 'physicalDmgBonus',
+  'ATK%': 'atkPct',
+  'DEF%': 'defPct',
+  'HP%': 'hpPct',
+  'Healing Bonus': 'healingBonus',
+  'Normal Attack DMG': 'normal attack',
+  'Charged Attack DMG': 'charged attack',
+  'Plunging Attack DMG': 'plunging attack',
+  'Elemental Skill DMG': 'elemental skill',
+  'Elemental Burst DMG': 'elemental burst',
+  'All DMG': 'dmg',
+  'Flat ATK': 'atkFlat'
+}
 
-'Name'
-'Type'
-'Rarity'
-'Base ATK'
-'EM'
-'CRIT RATE'
-'CRIT DMG'
-'ER'
-'Elemental DMG'
-'Physical DMG'
-'ATK%'
-'DEF%'
-'HP%'
-'Healing Bonus'
-
-
-
-'All DMG'
-'Normal Attack DMG'
-'Charged Attack DMG'
-'Plunging Attack DMG'
-'Elemental Skill DMG'
-'Elemental Burst DMG'
-'Flat ATK'
-'Additive Base DMG Normal Attack'
-'Additive Base DMG Charged Attacks'
-'Additive Base DMG Charged Attack'
-'Additive Base DMG Elemental Skill'
-'Bond of Life% (BoL)'
+export { CSV_DICT };

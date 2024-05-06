@@ -24,7 +24,6 @@ function createWeaponFromAmbr(weaponAmbrData) {
     name: weaponAmbrData.route,
     type: weaponAmbrData.type.toLowerCase(),
     rarity: weaponAmbrData.rank,
-    level: 90,
     baseAtk: getBaseAtk(weaponAmbrData),
     constantStats: {
       [substatName]: substatVal * 4.594

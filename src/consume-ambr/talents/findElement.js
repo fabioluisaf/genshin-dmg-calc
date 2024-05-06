@@ -3,8 +3,8 @@ import { ambrElementDict, ambrWeaponDict } from "../ambrDicts.js";
 function basicAtkElement(charAmbrData, basicAtkMode) {
   const weaponType = ambrWeaponDict[charAmbrData.weaponType];
   const isChargedAtk = !!(/charged/i).exec(basicAtkMode);
-  const convert = (isChargedAtk && weaponType === 'bow') ||
-                  weaponType === 'catalyst';
+  const convert = (isChargedAtk && weaponType === 'Bow') ||
+                  weaponType === 'Catalyst';
   
   return convert ? ambrElementDict[charAmbrData.element] : 'physical';
 }

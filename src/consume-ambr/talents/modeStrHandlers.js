@@ -78,7 +78,7 @@ function handleStackedModes(nameData, mvData) {
 
 function getMainTag(nameData) {
   if ((/dmg/i).exec(nameData)) {
-    return 'attack';
+    return 'dmg';
   } 
   
   if ((/healing|regeneration|restored/i).exec(nameData)) {

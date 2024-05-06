@@ -6,13 +6,17 @@
   "type": "module",
   "scripts": {
     "test": "node ./src/index.js",
-    "csv": "node ./src/consumeCsv.js"
+    "load-weapons": "node ./src/loadWeaponsToDb.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chalk": "^5.3.0",
     "dotenv": "^16.4.5",
     "mongodb": "^6.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.8"
   }
 }

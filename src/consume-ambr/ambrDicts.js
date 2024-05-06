@@ -8,11 +8,11 @@ export const ambrElementDict = {
   Ice: "cryo",
 };
 export const ambrWeaponDict = {
-  WEAPON_SWORD_ONE_HAND: 'sword',
-  WEAPON_CATALYST: 'catalyst',
-  WEAPON_CLAYMORE: 'claymore',
-  WEAPON_BOW: 'bow',
-  WEAPON_POLE: 'polearm'
+  WEAPON_SWORD_ONE_HAND: 'Sword',
+  WEAPON_CATALYST: 'Catalyst',
+  WEAPON_CLAYMORE: 'Claymore',
+  WEAPON_BOW: 'Bow',
+  WEAPON_POLE: 'Polearm'
 };
 export const ambrBonusAttrDict = {
   FIGHT_PROP_CRITICAL_HURT: 'critDmg',

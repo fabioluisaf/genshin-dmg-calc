@@ -8,6 +8,8 @@ import createTalentsFromAmbr from "./consume-ambr/talents/createTalentsFromAmbr.
 import { readFromFile, writeToFile } from './utils/files.js'
 import { getCharData, getFullCharData, getFullWeaponData, getWeaponData } from "./consume-ambr/dataFromApi.js";
 import createWeaponFromAmbr from "./consume-ambr/createWeaponFromAmbr.js";
+import { dbAllWeaponsOfType, dbFindWeapon } from "./db/weaponsDb.js";
+import { client } from "./db/dbConnect.js";
 
 const RUIN_GUARD = {
   name: "Ruin Guard",
@@ -25,27 +27,24 @@ const RUIN_GUARD = {
   },
 };
 
-const charAmbrData = await getCharData('gaming');
-const weaponAmbrData = await getWeaponData('Wolf\'s Gravestone');
+const charAmbrData = await getCharData('raiden shogun');
+const weapon = await dbFindWeapon('Engulfing Lightning');
 
 const baseChar = createCharFromAmbr(charAmbrData);
 const charBaseTalents = createTalentsFromAmbr(charAmbrData);
-const weapon = createWeaponFromAmbr(weaponAmbrData);
 
 const leveledTalents = talentsAtLevels(charBaseTalents, 9, 9, 9);
 const leveledChar = buildLeveledChar(baseChar, 80);
 
 const charWithWeapon = equipWeapon(leveledChar, weapon, 1);
-addBuff(charWithWeapon, 'critRate', 0.36); // Marechaussee
-addBuff(charWithWeapon, "plunging attack: charmed cloudstrider", 0.2); // Talent: Air of Prosperity
-addBuff(charWithWeapon, 'atkPct', 0.2);
-addBuff(charWithWeapon, 'atkFlat', 820);
-addBuff(charWithWeapon, 'critRate', 0.307);
-addBuff(charWithWeapon, 'critDmg', 1.158);
+
+// add variable weapon buffs after all other buffs
 
 // const dmgBA = calculateTalentDmg(charAfterBuffs, leveledTalents['basic attack']);
-const dmgE = calculateTalentDmg(charWithWeapon, leveledTalents['elemental skill']);
+// const dmgE = calculateTalentDmg(charWithWeapon, leveledTalents['elemental skill'], '', RUIN_GUARD);
 // const dmgQ = calculateTalentDmg(charAfterBuffs, leveledTalents['elemental burst']);
 
-console.log(dmgE);
-// console.log(charWithWeapon);
+// console.log(dmgE);
+console.log(charWithWeapon);
+
+await client.close();
