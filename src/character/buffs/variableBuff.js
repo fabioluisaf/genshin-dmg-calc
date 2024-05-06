@@ -16,15 +16,15 @@ function getScalingValue(char, attrName) {
   }
 }
 
-function applyVariableBuff(char, weapon) {
-  const variableStats = Object.keys(weapon.variableStats);
+function applyVariableBuff(char, buffObj) {
+  const variableStats = Object.keys(buffObj);
 
   if (variableStats.length === 0) {
     return;
   }
 
   variableStats.forEach(statName => {
-    const stat = weapon.variableStats[statName];
+    const stat = buffObj[statName];
     const charAttr = getScalingValue(char, stat.scalingAttr);
     const buffVal = stat.maxVal ? 
                     Math.min((charAttr - stat.reduceAttr) * stat.value, stat.maxVal) :

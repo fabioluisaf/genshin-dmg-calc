@@ -1,4 +1,5 @@
-import clamp from "./utils/clamp.js";
+import amplifyingMult from "./ampReaction.js";
+import clamp from "../utils/clamp.js";
 
 const BLANK_ENEMY = {
   name: "No enemy",
@@ -26,9 +27,7 @@ function getDmgModifiers(dmgModifierList, dmgTags) {
   return dmgBonus;
 }
 
-function amplifyingMult(reactionName) {
-  return 1;
-}
+
 
 function getResMult(baseResistance) {
   if (baseResistance < 0) {
@@ -70,7 +69,7 @@ function calculateTalentDmg(char, talent, reaction = '', target = BLANK_ENEMY) {
 
   const dmgPerMode = {};
   const avgCritMult = 1 + effectiveAttrs.critRate*char.critDmg;
-  const ampReactionMult = amplifyingMult(reaction);
+  const ampReactionMult = amplifyingMult(char, reaction);
 
   talent = talent.filter(mode => mode.mainTag === 'dmg');
 
@@ -95,6 +94,7 @@ function calculateTalentDmg(char, talent, reaction = '', target = BLANK_ENEMY) {
     const { enemyDefMult, enemyResMult } = getEnemyMults(target, char, talentMode.element);
 
     let dmgBeforeCrit = effectiveBaseDmg * effectiveDmgBonus * ampReactionMult;
+
 
     if (target !== BLANK_ENEMY) {
       dmgBeforeCrit *= enemyDefMult * enemyResMult;

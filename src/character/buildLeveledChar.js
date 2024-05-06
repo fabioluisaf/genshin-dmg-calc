@@ -41,6 +41,7 @@ function buildLeveledChar(baseChar, level, hasAscended = true) {
     pctDmgBonus: {},
     additiveBaseDmgBonus: {},
     baseDmgMultipliers: {},
+    reactionBonus: {}, // NEED TO ADD WAYS OF INTERACTING WITH THIS KEY
     enemyResReduction: {
       physical: 0,
       pyro: 0,

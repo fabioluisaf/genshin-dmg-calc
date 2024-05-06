@@ -6,7 +6,13 @@ async function dbGetAllWeapons() {
 }
 
 async function dbFindWeapon(weaponName) {
-  const weapon = await weaponsCollection.findOne({ name: {$regex: weaponName, $options: 'i'} });
+  let weapon;
+
+  if (weaponName.includes('(')) {
+    weapon = await weaponsCollection.findOne({ name: weaponName });
+  } else {
+    weapon = await weaponsCollection.findOne({ name: {$regex: weaponName, $options: 'i'}});
+  }
 
   return weapon;
 }

@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "node ./src/index.js",
-    "load-weapons": "node ./src/loadWeaponsToDb.js"
+    "load-weapons": "node ./src/loadWeaponsToDb.js",
+    "compare-weapons": "node ./src/compareWeapons.js"
   },
   "keywords": [],
   "author": "",

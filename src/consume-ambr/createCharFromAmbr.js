@@ -31,6 +31,7 @@ function createCharFromAmbr(charAmbrData) {
     id: charAmbrData.id.toString(),
     name: charAmbrData.route,
     rarity: charAmbrData.rank,
+    weaponType: ambrWeaponDict[charAmbrData.weaponType],
     baseHp,
     baseAtk,
     baseDef,
@@ -39,7 +40,6 @@ function createCharFromAmbr(charAmbrData) {
     maxAscensionDef,
     bonusAttrName: ambrBonusAttrDict[charAmbrData.specialProp],
     element: ambrElementDict[charAmbrData.element],
-    weaponType: ambrWeaponDict[charAmbrData.weaponType]
   };
 
   return baseChar;

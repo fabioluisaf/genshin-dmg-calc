@@ -1,7 +1,7 @@
 import buildLeveledChar from "./character/buildLeveledChar.js";
 import equipWeapon from "./weapon/equipWeapon.js";
 import talentsAtLevels from "./character/leveling/talentsAtLevels.js";
-import calculateTalentDmg from "./calculateDmg.js";
+import calculateTalentDmg from "./dmg/calculateDmg.js";
 import addBuff from "./character/buffs/addBuff.js";
 import createCharFromAmbr from "./consume-ambr/createCharFromAmbr.js";
 import createTalentsFromAmbr from "./consume-ambr/talents/createTalentsFromAmbr.js";
@@ -37,22 +37,15 @@ const charBaseTalents = createTalentsFromAmbr(charAmbrData);
 const leveledTalents = talentsAtLevels(charBaseTalents, 9, 9, 9);
 const leveledChar = buildLeveledChar(baseChar, 80);
 
-const charWithWeapon = equipWeapon(leveledChar, weapon, 1);
-addBuff(charWithWeapon, 'hpFlat', 7893);
-addBuff(charWithWeapon, 'atkFlat', 311);
-addBuff(charWithWeapon, 'defFlat', 1013);
-addBuff(charWithWeapon, 'critRate', 0.478);
-addBuff(charWithWeapon, 'critDmg', 0.396);
-addBuff(charWithWeapon, 'geoDmgBonus', 0.466);
-addBuff(charWithWeapon, 'defPct', 0.3);
+const charWithWeapon = equipWeapon(leveledChar, weapon);
 
-applyVariableBuff(charWithWeapon, weapon);
+applyVariableBuff(charWithWeapon, weapon.variableStats);
 
 // const dmgBA = calculateTalentDmg(charAfterBuffs, leveledTalents['basic attack']);
 const dmgE = calculateTalentDmg(charWithWeapon, leveledTalents['elemental skill']);
 // const dmgQ = calculateTalentDmg(charAfterBuffs, leveledTalents['elemental burst']);
 
-console.log(dmgE);
+// console.log(dmgE);
 console.log(charWithWeapon);
 
 await client.close();

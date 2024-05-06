@@ -4,7 +4,7 @@ function equipWeapon(char, weapon) {
   if (char.weaponType !== weapon.type) {
     throw new Error(`Can't equip ${weapon.type} to a character whose weapon type is ${char.weaponType}`)
   }
-  const charWithWeapon = {...char};
+  const charWithWeapon = JSON.parse(JSON.stringify(char));
 
   charWithWeapon.equipedWeaponName = weapon.name;
   charWithWeapon.baseAtk += weapon.baseAtk;
